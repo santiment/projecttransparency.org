@@ -1,0 +1,3 @@
+{...}:{
+imports = [/vagrant/devbox.nix];
+}
