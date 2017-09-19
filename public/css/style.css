@@ -23,7 +23,7 @@ body {
     }
 }
 .colorblend {
-    background: linear-gradient(270deg, #df2f2f, #316bae, #309d81);
+    background: linear-gradient(270deg, #c82f3f, #316bae, #309d81);
     background-size: 300% 300%;
 
     -webkit-animation: AnimationName 120s ease infinite;
@@ -100,6 +100,14 @@ h1 {
     h1 {
         font-size: 34px;
     }
+}
+
+h2 {
+    font-size: 16px;
+    font-weight: 100;
+    font-family: 'Nunito';
+    letter-spacing: 4px;
+    text-transform: uppercase;
 }
 
 a {
@@ -315,7 +323,7 @@ label {
 }
 .verifying {
     /* background: rgba(251, 161, 83, 1.0); */
-    background: rgba(223, 47, 47, 0.7);
+    background: rgba(220, 47, 63, 0.80);
     /* background: rgba(49, 107, 174, 1.0); */
 }
 
@@ -338,6 +346,7 @@ label {
     transition: background 0.25s ease-in;
 
     background: rgba(0, 0, 24, 0.6);
+    border: none;
     border-radius: 4px;
     box-shadow: 0 5px 5px rgba(0,0,0,0.1);
     color: rgba(255,255,255,0.8);
@@ -367,4 +376,15 @@ label {
         width: 150px;
         margin: 8px auto;
     }
+}
+
+form {
+    padding: 24px 0;
+    text-align: center;
+}
+input[type=password] {
+    border: 1px solid #3d4450;
+    border-radius: 4px;
+    font-size: 18px;
+    padding: 10px;
 }
