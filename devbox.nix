@@ -113,7 +113,7 @@
       
         "projecttransparency.org" = {
 	  default = true;
-	  root = "${rootFolder}/projecttransparency.org";
+	  root = "${rootFolder}/public";
 
 	  extraConfig = ''
 	    auth_basic "Access restricted";
