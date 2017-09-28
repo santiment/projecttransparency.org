@@ -223,6 +223,20 @@ label {
     }
 }
 
+.info {
+    overflow: auto;
+    position: relative;
+}
+.description {
+    background: rgba(61, 68, 80, 0.07);
+    border-radius: 0 0 4px 4px;
+    overflow: auto;
+    padding: 0 24px;
+}
+.description p {
+    font-size: 14px;
+}
+
 .projectid {
     float: left;
     font-size: 21px;
