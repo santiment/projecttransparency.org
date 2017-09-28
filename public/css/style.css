@@ -226,7 +226,7 @@ label {
 .projectid {
     float: left;
     font-size: 21px;
-    width: 40%;
+    width: 30%;
 }
 .projectid img {
     margin: 25px 16px 25px 25px;
@@ -237,13 +237,14 @@ label {
     float: left;
     line-height: 1.2;
     overflow: auto;
-    width: 40%;
+    width: 50%;
 }
+.marketcap,
 .collected,
 .balance {
     float: left;
     padding-top: 20px;
-    width: 50%;
+    width: 30%;
 }
 
 @media (max-width: 960px) {
@@ -253,11 +254,6 @@ label {
     .numbers {
         width: 50%;
     }
-    /* .collected,
-    .balance {
-        text-align: center;
-        width: 50%;
-    } */
 }
 @media (max-width: 767px) {
     .projectid {
@@ -275,11 +271,13 @@ label {
         float: none;
         width: 100%;
     }
+    .marketcap,
     .collected,
     .balance {
-        font-size: 16px;
+        float: none;
+        font-size: 18px;
         text-align: center;
-        width: 50%;
+        width: 100%;
     }
 }
 
@@ -323,8 +321,8 @@ label {
 }
 .verifying {
     /* background: rgba(251, 161, 83, 1.0); */
-    background: rgba(220, 47, 63, 0.80);
-    /* background: rgba(49, 107, 174, 1.0); */
+    /* background: rgba(220, 47, 63, 0.80); */
+    background: rgba(49, 107, 174, 0.8);
 }
 
 .footer {
