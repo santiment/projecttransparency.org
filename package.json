@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "db-migrate": "^0.10.0-beta.23",
+    "db-migrate-pg": "^0.2.5"
+  }
+}
