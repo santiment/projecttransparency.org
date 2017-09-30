@@ -57,6 +57,23 @@ function getWallets($ticker_list) {
     /* Get current wallet data */
 
     $sql = "SELECT * FROM wallet_data WHERE ticker in (".$sql_tickers.")";
+
+    $sql = <<<SQL
+SELECT 
+  ticker,
+  project_eth_address.address AS address,
+  latest_eth_wallet_data.balance AS balance
+
+FROM 
+  project,
+  project_eth_address,
+  latest_eth_wallet_data
+
+WHERE
+  project.id = project_eth_address.project_id AND
+  project_eth_address.address = latest_eth_wallet_data.address;
+SQL;
+
     $result = pg_query($conn, $sql);
 
     while ($row = pg_fetch_assoc($result)) {
@@ -83,12 +100,19 @@ $walletData = getWallets($tickers);
 
 function balanceStr($ticker) {
     global $walletData;
+    if ($walletData[$ticker]['balance'] == null) {
+        return "No data";
+    }
     return "$". number_format( $walletData[$ticker]['usd_balance'], 0)
               . "<br/>Ξ" . number_format( $walletData[$ticker]['balance'], 1);
 }
 
 function marketCapStr($ticker) {
     global $walletData;
+
+    if ($walletData[$ticker]['market_cap'] == null) {
+        return "No data";
+    }
     return "$". number_format( $walletData[$ticker]['market_cap'], 0);
 }
 
@@ -202,7 +226,7 @@ PROJECT;
     
 }
 
-$projectView = join("\n",array_map( displayProject, $tickers));
+$projectView = join("\n",array_map( "displayProject", $tickers));
 ?>
 
 <!DOCTYPE html>
