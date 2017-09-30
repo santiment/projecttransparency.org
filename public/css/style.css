@@ -71,20 +71,18 @@ body {
     background: url("../img/bg_wave6.png") center 88px no-repeat;
     background-size: cover;
     background-attachment: fixed;
+    height: 100%;
+    overflow: auto;
 }
 
 h1 {
     color: #fff;
-    /* font-weight: 200;
-    font-size: 72px; */
-    margin: 24px 0;
-
     font-size: 44px;
     font-weight: 100;
     font-family: 'Nunito';
     letter-spacing: 4px;
+    margin: 24px 0;
     text-transform: uppercase;
-
 }
 @media (max-width: 960px) {
     h1 {
@@ -112,6 +110,7 @@ h2 {
 
 a {
     color: #009663;
+    cursor: pointer;
     text-decoration: none;
 }
 a:hover {
@@ -126,11 +125,6 @@ label {
     font-size: 14px;
     display: block;
     margin-bottom: 5px;
-}
-@media (max-width: 767px) {
-    label {
-        font-size: 11px;
-    }
 }
 
 
@@ -236,6 +230,12 @@ label {
 .description p {
     font-size: 14px;
 }
+@media (max-width: 767px) {
+    .description p {
+        font-size: 18px;
+        text-align: center;
+    }
+}
 
 .projectid {
     float: left;
@@ -243,7 +243,7 @@ label {
     width: 30%;
 }
 .projectid img {
-    margin: 25px 16px 25px 25px;
+    margin: 28px 16px 28px 28px;
     vertical-align: middle;
     width: 48px;
 }
@@ -257,7 +257,7 @@ label {
 .collected,
 .balance {
     float: left;
-    padding-top: 20px;
+    padding-top: 28px;
     width: 30%;
 }
 
@@ -271,7 +271,7 @@ label {
 }
 @media (max-width: 767px) {
     .projectid {
-        font-size: 21px;
+        font-size: 32px;
         float: none;
         width: 100%;
         text-align: center;
@@ -289,7 +289,7 @@ label {
     .collected,
     .balance {
         float: none;
-        font-size: 18px;
+        font-size: 21px;
         text-align: center;
         width: 100%;
     }
@@ -320,8 +320,10 @@ label {
         border-radius: 0 0 4px 4px;
         width: 100%;
         margin-top: 21px;
+        margin-left: -16px;
         text-align: center;
-        font-size: 11px;
+        font-size: 18px;
+        padding: 18px 14px;
     }
     .rating img {
         margin-bottom: 4px;
@@ -337,6 +339,52 @@ label {
     /* background: rgba(251, 161, 83, 1.0); */
     /* background: rgba(220, 47, 63, 0.80); */
     background: rgba(49, 107, 174, 0.8);
+}
+
+#learn {
+    display: none;
+
+}
+.learn-wrapper {
+    background: rgba(38,43,51,0.6);
+    color: #fff;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    text-align: center;
+    width: 100%;
+    z-index: 1111;
+}
+.learn-content {
+    background: rgba(38,43,51,0.9);
+    border-radius: 4px;
+    margin: 2% auto 0 auto;
+    padding: 32px 64px 64px 64px;
+    overflow: auto;
+    text-align: left;
+    width: 50%;
+}
+.learn-content h2 {
+    text-align: center;
+    margin-bottom: 32px;
+}
+.learn-content a {
+    color: #309d81;
+}
+@media (max-width: 767px) {
+    .learn-content {
+        padding: 16px;
+        width: 90%;
+    }
+}
+.fa-close {
+    padding: 16px;
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
 }
 
 .footer {

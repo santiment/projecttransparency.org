@@ -111,7 +111,7 @@ function marketCapStr($ticker) {
     global $walletData;
 
     if ($walletData[$ticker]['market_cap'] == null) {
-        return "No data";
+        return "Verifying";
     }
     return "$". number_format( $walletData[$ticker]['market_cap'], 0);
 }
@@ -262,7 +262,7 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
         <p>Santiment introduces the first financial reporting system for blockchain projects.
             Today’s top teams are leading the way reporting their earnings and expenditures –
             so you can make informed investment decisions.</p>
-        <!-- <a class="button home" href="#">Learn More</a> -->
+        <a class="button home" onclick="shLearn()">Learn More</a>
         <a class="button home" href="https://docs.google.com/forms/d/e/1FAIpQLScsfn5pRQ8gQrrT_7tsEcyNHbM96hTNyk9MUCtJSY-_MWgHcw/viewform" target="_blank">Submit a Project</a>
     </div>
 
@@ -275,8 +275,49 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
         <!-- <p><a href="https://santiment.net" target="_blank">santiment.net</a> &bull; <a href="https://sanbase.io" target="_blank">sanbase.io</a></p> -->
     </div>
 
+    <div id="learn" class="learn-wrapper">
+        <div class="learn-content">
+            <div id="close" onclick="shLearn()">
+                <i class="fa fa-close"></i>
+            </div>
+            <h2>Santiment Project Transparency Initiative</h2>
+            <p>Santiment is teaming with leading blockchain projects to create a "self-governing" movement that aims to
+                reduce potential regulatory crackdowns. In the spirit of traditional financial reporting by publicly-traded companies,
+                Project Transparency is starting as a very simple voluntary disclosure of wallets controlled by a project and an
+                explanation of any expenditure > 0.5% of the funds collected.</p>
+            <h3>What is certification?</h3>
+            <p>"Certification" means that a project has opened the following information to the public:</p>
+            <ul>
+                <li>Funds raised (all sources, not just ETH)</li>
+                <li>Any presale conducted and its details (% of tokens & amt $ raised)</li>
+                <li>% of tokens held by the project</li>
+                <li>Contract address</li>
+                <li>Project wallet addresses</li>
+                <li>More transparency metrics in the future</li>
+            </ul>
+            <h3>How it works</h3>
+            <ol>
+                <li>A project signs up expressing their interest to be certified: <a href="https://docs.google.com/forms/d/e/1FAIpQLScsfn5pRQ8gQrrT_7tsEcyNHbM96hTNyk9MUCtJSY-_MWgHcw/viewform" target="_blank">Signup here</a></li>
+                <li>We will post the project as "Verifying" on the Project Transparency website</li>
+                <li>Once information is verified and complete, we'll update the project status to "Certified"</li>
+                <li>Visitors may click on each project to find out more information</li>
+            </ol>
+        </div>
+    </div>
+
 
 </div>
+
+<script type="text/javascript">
+    function shLearn() {
+        var x = document.getElementById('learn');
+        if (x.style.display === 'block') {
+            x.style.display = 'none';
+        } else {
+            x.style.display = 'block';
+        }
+    }
+</script>
 
 </body>
 </html>
