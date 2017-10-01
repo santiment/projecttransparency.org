@@ -40,7 +40,7 @@ $ethPrice = $priceResult['data']['amount'];
    NOTICE: The order of which they are displayed  equeals the order of the tickers given here
 */
 
-$tickers = array("ANT","CFI", "DNT", "DNA", "HSR", "ICN", "LKK", "SAN", "SNT");
+$tickers = array("ANT","CFI", "DNT", "DNA", "HSR", "ICN", "LKK", "SAN");
 
 /* get balances */
 
