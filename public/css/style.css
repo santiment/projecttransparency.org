@@ -261,7 +261,7 @@ label {
 .numbers {
     float: left;
     line-height: 1.2;
-    overflow: auto;
+    overflow: hidden;
     width: 50%;
 }
 .marketcap,
@@ -363,7 +363,7 @@ label {
     position: fixed;
     top: 0;
     left: 0;
-    overflow: auto;
+    /* overflow: auto; */
     text-align: center;
     width: 100%;
     z-index: 1111;
@@ -376,6 +376,7 @@ label {
     overflow: auto;
     text-align: left;
     width: 50%;
+    height: 75%;
 }
 .learn-content h2 {
     text-align: center;
