@@ -216,6 +216,17 @@ label {
         margin: 16px auto 0 auto;
     }
 }
+.total {
+    font-size: 21px;
+    margin-top: 16px;
+}
+.total p {
+    padding: 16px 28px;
+}
+.total p span {
+    font-weight: 700;
+    float: right;
+}
 
 .info {
     overflow: auto;

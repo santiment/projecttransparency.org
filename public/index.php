@@ -101,7 +101,7 @@ $walletData = getWallets($tickers);
 function balanceStr($ticker) {
     global $walletData;
     if ($walletData[$ticker]['balance'] == null) {
-        return "No data";
+        return "Verifying";
     }
     return "$". number_format( $walletData[$ticker]['usd_balance'], 0)
               . "<br/>Ξ" . number_format( $walletData[$ticker]['balance'], 1);
@@ -268,6 +268,9 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
 
     <div class="content">
        <?php echo $projectView; ?>
+       <div class="project total">
+           <p>Total Represented Market Cap <span>$784,027,100</span></p>
+       </div>
     </div>
 
     <div class="footer">
