@@ -21,7 +21,7 @@
         gtag('config', 'UA-84150740-2');
     </script>
 </head>
-<body class="colorblend">
+<body id="wrap" class="colorblend">
 
 <div class="wrapper">
 
@@ -36,6 +36,9 @@
     </div>
 
     <div class="content">
+        <div class="project total">
+            <p>Total Represented Market Cap <span>$784,027,100</span></p>
+        </div>
         <div class="project">
             <div class="info">
                 <div class="projectid"><img src="img/projects/aragon.png" />Aragon</div>
@@ -190,9 +193,7 @@
                 <p>Open source mobile client built entirely on Ethereum technologies.</p>
             </div>
         </div>
-        <div class="project total">
-            <p>Total Represented Market Cap <span>$784,027,100</span></p>
-        </div>
+
     </div>
 
     <div class="footer">
@@ -238,8 +239,10 @@
         var x = document.getElementById('learn');
         if (x.style.display === 'block') {
             x.style.display = 'none';
+            document.getElementById("wrap").classList.remove('noscroll');
         } else {
             x.style.display = 'block';
+            document.getElementById("wrap").classList.add('noscroll');
         }
     }
 </script>

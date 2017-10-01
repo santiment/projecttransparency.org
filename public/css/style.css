@@ -30,6 +30,9 @@ body {
     -moz-animation: AnimationName 120s ease infinite;
     animation: AnimationName 120s ease infinite;
 }
+.noscroll {
+    overflow: hidden;
+}
 
 @-webkit-keyframes AnimationName {
     0% {
@@ -71,8 +74,8 @@ body {
     background: url("../img/bg_wave6.png") center 88px no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    height: 100%;
-    overflow: auto;
+    /* height: 100%; */
+    /* overflow: auto; */
 }
 
 h1 {
@@ -218,7 +221,7 @@ label {
 }
 .total {
     font-size: 21px;
-    margin-top: 16px;
+    margin-bottom: 16px;
 }
 .total p {
     padding: 16px 28px;
@@ -363,7 +366,7 @@ label {
     position: fixed;
     top: 0;
     left: 0;
-    /* overflow: auto; */
+    overflow: auto;
     text-align: center;
     width: 100%;
     z-index: 1111;
@@ -373,10 +376,9 @@ label {
     border-radius: 4px;
     margin: 2% auto 0 auto;
     padding: 32px 64px 64px 64px;
-    overflow: auto;
+    /* overflow: auto; */
     text-align: left;
     width: 50%;
-    height: 75%;
 }
 .learn-content h2 {
     text-align: center;

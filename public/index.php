@@ -252,7 +252,7 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
         gtag('config', 'UA-84150740-2');
     </script>
 </head>
-<body class="colorblend">
+<body id="wrap" class="colorblend">
 
 <div class="wrapper">
 
@@ -267,10 +267,10 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
     </div>
 
     <div class="content">
-       <?php echo $projectView; ?>
-       <div class="project total">
+        <div class="project total">
            <p>Total Represented Market Cap <span>$784,027,100</span></p>
        </div>
+       <?php echo $projectView; ?>
     </div>
 
     <div class="footer">
@@ -308,7 +308,6 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
         </div>
     </div>
 
-
 </div>
 
 <script type="text/javascript">
@@ -316,8 +315,10 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
         var x = document.getElementById('learn');
         if (x.style.display === 'block') {
             x.style.display = 'none';
+            document.getElementById("wrap").classList.remove('noscroll');
         } else {
             x.style.display = 'block';
+            document.getElementById("wrap").classList.add('noscroll');
         }
     }
 </script>
