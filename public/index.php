@@ -132,12 +132,28 @@ $projectData = [
         "description" => "Manage entire organisations using the blockchain."
     ],
 
+    "" => [
+        "img" => "img/projects/attores.png",
+        "projectid" => "Attores",
+        "collected" => "Ξ",
+        "status" => $verifying,
+        "description" => "Blockchain applications & smart contracts (digital signatures and certificates)."
+    ],
+
     "CFI" => [
         "img" => "img/projects/cofoundit.png",
         "projectid" => "Cofound.it",
         "collected" => "Ξ56,565",
         "status" => $verifying,
         "description" => "Distributed global platform that connects exceptional startups, experts and investors worldwide."
+    ],
+
+    "" => [
+        "img" => "img/projects/dappbase.png",
+        "projectid" => "Dappbase.com",
+        "collected" => "Ξ",
+        "status" => $verifying,
+        "description" => "Powerful and accessible tools for decentralized app development."
     ],
 
     "DNT" => [
@@ -152,7 +168,7 @@ $projectData = [
         "img" => "img/projects/encrypgen.png",
         "projectid" => "Encrypgen",
         "collected" => "Ξ43,170.0",
-        "status" => $certified,
+        "status" => $verifying,
         "description" => "Enchanced security for safe cloud storage and sharing of genomic data."
     ],
 
@@ -162,6 +178,14 @@ $projectData = [
         "collected" => "Ξ100.369",
         "status" => $verifying,
         "description" => "A decentralized insurance and reinsurance marketplace."
+    ],
+
+    "GAT" => [
+        "img" => "img/projects/gatcoin.png",
+        "projectid" => "Gatcoin",
+        "collected" => "Ξ",
+        "status" => $verifying,
+        "description" => "Global distributed shopping platform."
     ],
 
     "HSR" => [
@@ -184,7 +208,7 @@ $projectData = [
         "img" => "img/projects/indorse.png",
         "projectid" => "Indorse",
         "collected" => '$9,026.77',
-        "status" => $certified,
+        "status" => $verifying,
         "description" => "Decentralised professional networking platform."
     ],
 
@@ -210,6 +234,14 @@ $projectData = [
         "collected" => "Ξ299343.1",
         "status" => $certified,
         "description" => "Open source mobile client built entirely on Ethereum technologies."
+    ],
+
+    "VIC" => [
+        "img" => "img/projects/virgilcapital.png",
+        "projectid" => "Virgil Capital",
+        "collected" => "Ξ",
+        "status" => $certified,
+        "description" => "Investment firm that specializes in real estate and angel investing."
     ]
    
 ];
@@ -284,7 +316,7 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
 
     <div class="content">
         <div class="project total">
-           <p>Total Represented Market Cap <span>$784,027,100</span></p>
+           <p>Total Represented Market Cap <span>>$650M</span></p>
        </div>
        <?php echo $projectView; ?>
     </div>

@@ -7,15 +7,17 @@ INSERT INTO project (ticker, name) VALUES
   ('DNT', 'district0x'),
   ('DNA', 'Encrypgen'),
   ('RSC', 'Etherisc'),
-  /* ('', 'Gatcoin.io'), */
+  ('GAT', 'Gatcoin.io'),
   ('HSR', 'Hshare'),
   ('ICN', 'Iconomi'),
   ('IND', 'Indorse'),
   /* ('', 'IconiqLab'), */
   /* ('', 'KPMG'), */
   ('LKK', 'Lykke'),
+  /* ('', 'Musiconomi'), */
   ('SAN', 'Santiment'),
-  ('SNT', 'Status.im');
+  ('SNT', 'Status.im'),
+  ('VIC', 'Virgil Capital');
 
 /* Insert known addresses */
 INSERT INTO project_eth_address (project_id, address)
@@ -32,7 +34,8 @@ INSERT INTO project_eth_address (project_id, address)
       ('Iconomi', '0x154Af3E01eC56Bc55fD585622E33E3dfb8a248d8'),
       ('Indorse', '0x26967201d4d1e1aa97554838defa4fc4d010ff6f'),
       ('Santiment', '0x6dd5a9f47cfbc44c04a0a4452f0ba792ebfbcc9a'),
-      ('Status.im', '0xA646E29877d52B9e2De457ECa09C724fF16D0a2B')
+      ('Status.im', '0xA646E29877d52B9e2De457ECa09C724fF16D0a2B'),
+      ('Virgil Capital', '0x0D7096819e18D4B096998A1254Db8bbEC72c0c13')
     ) AS t (name, address)
   WHERE
     project.name = t.name
