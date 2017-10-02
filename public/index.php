@@ -150,7 +150,7 @@ $projectData = [
 
     "DAP" => [
         "img" => "img/projects/dappbase.png",
-        "projectid" => "Dappbase.com",
+        "projectid" => "Dappbase",
         "collected" => "Ξ",
         "status" => $verifying,
         "description" => "Powerful and accessible tools for decentralized app development."
@@ -167,7 +167,7 @@ $projectData = [
     "DNA" => [
         "img" => "img/projects/encrypgen.png",
         "projectid" => "Encrypgen",
-        "collected" => "Ξ43,170.0",
+        "collected" => "Ξ",
         "status" => $verifying,
         "description" => "Enchanced security for safe cloud storage and sharing of genomic data."
     ],
