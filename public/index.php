@@ -156,6 +156,14 @@ $projectData = [
         "description" => "Enchanced security for safe cloud storage and sharing of genomic data."
     ],
 
+    "RSC" => [
+        "img" => "img/projects/etherisc.png",
+        "projectid" => "Etherisc",
+        "collected" => "Ξ100.369",
+        "status" => $verifying,
+        "description" => "A decentralized insurance and reinsurance marketplace."
+    ],
+
     "HSR" => [
         "img" => "img/projects/hcash.png",
         "projectid" => "Hshare",
@@ -170,6 +178,14 @@ $projectData = [
         "collected" => '$10,395,054',
         "status" => $certified,
         "description" => "Investment fund management platform for the decentralized economy."
+    ],
+
+    "IND" => [
+        "img" => "img/projects/indorse.png",
+        "projectid" => "Indorse",
+        "collected" => '$9,026.77',
+        "status" => $certified,
+        "description" => "Decentralised professional networking platform."
     ],
 
     "LKK" => [
