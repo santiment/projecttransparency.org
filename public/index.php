@@ -307,9 +307,9 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
     <div class="header">
         <img src="img/san_icon.png" />
         <h1>Project Transparency</h1>
-        <p>Santiment introduces the first financial reporting system for blockchain projects.
-            Today’s top teams are leading the way reporting their earnings and expenditures –
-            so you can make informed investment decisions.</p>
+        <p>Leading members of the blockchain and cryptocurrency industry unite to
+        launch Project Transparency, a voluntary disclosure standard which aims to
+        bring self governance and greater transparency for investors and the community.</p>
         <a class="button home" onclick="shLearn()">Learn More</a>
         <a class="button home" href="https://docs.google.com/forms/d/e/1FAIpQLScsfn5pRQ8gQrrT_7tsEcyNHbM96hTNyk9MUCtJSY-_MWgHcw/viewform" target="_blank">Submit a Project</a>
     </div>
@@ -331,28 +331,49 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
             <div id="close" onclick="shLearn()">
                 <i class="fa fa-close"></i>
             </div>
-            <h2>Santiment Project Transparency Initiative</h2>
-            <p>Santiment is teaming with leading blockchain projects to create a "self-governing" movement that aims to
-                reduce potential regulatory crackdowns. In the spirit of traditional financial reporting by publicly-traded companies,
-                Project Transparency is starting as a very simple voluntary disclosure of wallets controlled by a project and an
-                explanation of any expenditure > 0.5% of the funds collected.</p>
-            <h3>What is certification?</h3>
-            <p>"Certification" means that a project has opened the following information to the public:</p>
+            <h2>PROJECT TRANSPARENCY LAUNCHED BY SIXTEEN INDUSTRY LEADERS, ICO SUMMIT, 2 OCTOBER 2017 (VIENNA, AUSTRIA)</h2>
+            <h3>Aragon, Cofound.it, District0x, Encrypgen, Etherisc, Hcash, Iconomi, Indorse, Lykke, Santiment, Attores,
+            Dappbase, Gatcoin, Iconiq, Virgil Capital and KPMG jointly launch a voluntary disclosure initiative called,
+            Project Transparency</h3>
+            <p><em>Goal to create a self regulated, industry led movement toward greater transparency and accountability within
+            the Blockchain sector for investors and the community</em></p>
             <ul>
-                <li>Funds raised (all sources, not just ETH)</li>
-                <li>Any presale conducted and its details (% of tokens & amt $ raised)</li>
-                <li>% of tokens held by the project</li>
-                <li>Contract address</li>
-                <li>Project wallet addresses</li>
-                <li>More transparency metrics in the future</li>
+                <li>16 pre and post ICO projects, accelerators, professional services & hedge fund in the blockchain and the
+                cryptocurrency industry unite to launch this self regulated initiative</li>
+                <li>Project Transparency represents > $650M USD in market capitalisation</li>
+                <li>Aim to improve regulatory procedures and disclosure within digital currency sector</li>
+                <li>Ambition for industry-wide adoption of Project Transparency for clearer disclosures</li>
             </ul>
-            <h3>How it works</h3>
-            <ol>
-                <li>A project signs up expressing their interest to be certified: <a href="https://docs.google.com/forms/d/e/1FAIpQLScsfn5pRQ8gQrrT_7tsEcyNHbM96hTNyk9MUCtJSY-_MWgHcw/viewform" target="_blank">Signup here</a></li>
-                <li>We will post the project as "Verifying" on the Project Transparency website</li>
-                <li>Once information is verified and complete, we'll update the project status to "Certified"</li>
-                <li>Visitors may click on each project to find out more information</li>
-            </ol>
+            <p>Santiment, (<a href="https://santiment.net" target="_blank">santiment.net</a>) the world’s first crypto-market datafeed platform, today announces at the Vienna ICO-Summit that it
+            has worked with 15 other projects to launch Project Transparency. The voluntary initiative aims to encourage disclosure
+            of wallets controlled by a project and provide a voluntary explanation of any expenditure greater than 0.5% of the
+            funds collected.</p>
+            <p>Santiment joins a number of ethical, industry leading digital asset industry players including, Aragon, Cofound.it,
+            District0x, Encrypgen, Etherisc, Hcash, Iconomi, Indorse, Lykke, Attores, Dappbase, Gatcoin, Iconiq, Virgil Capital and
+            KPMG to present the long term ambition is to provide potential investors and the community with greater transparency and
+            accountability for funds raised as the ICO space sees greater regulatory scrutiny in many markets and even legal restriction
+            in China and Korea.</p>
+            <p>Maksim Balashevich, CEO and Founder of Santiment, said: "With the rapid rise of digital currencies and proliferation of
+            ICOs, investors increasingly want security regarding their funds and transparency on how they are administered. Santiment
+            was developed to provide insight and transparency to investors looking to enter illiquid and highly volatile markets,
+            Project Transparency affirms our commitment to improving governance in the Blockchain sector."</p>
+            <p>Santiment has confirmed that it will provide funding for Project Transparency’s web page (www.ProjectTransparency.org)
+            and for manpower to process applications and keep the initiative staffed. Any Blockchain project can join the initiative,
+            the only criteria is to disclose the wallets controlled, funds held and explain any expenditures over 0.5% of the funds
+            raised.</p>
+            <p>With over $650M USD of market capitalisation represented by Project Transparency, there is significant momentum for this
+            industry led initiative. The evolution of next generation levels of transparency is important as it matures and continues its
+            journey towards self governance in the tokenized economy. Taiyang Zhang CEO of pre-ICO project Dappbase, and GATCOIN’s Simon
+            Cheong explained that their support for Project Transparency stemmed from their imminent funding goals and the investor
+            interest for this voluntary disclosure: "transparency drives better, sustainable business. And that's what we want."</p>
+            <p><strong>About Santiment:</strong> Santiment is the world's first crypto-market big data network, combining market datafeeds, sentiment
+            analysis, blockchain analytics, and everything else crypto-traders need for this emerging market. Built by traders for traders,
+            the network gives participants an information edge over the competitors thanks to machine learning and the wisdom of the crowd.</p>
+            <p><strong>Contact for Santiment.net</strong><br />
+               Dorjee Sun: <a href="mailto:dorjee.s@santiment.net">dorjee.s@santiment.net</a><br />
+               Contact: +61 416 292 245<br />
+               WhatsApp: +65 9777 0416<br />
+               Skype: dorjee.sun</p>
         </div>
     </div>
 
