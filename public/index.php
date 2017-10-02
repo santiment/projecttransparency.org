@@ -316,7 +316,7 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
 
     <div class="content">
         <div class="project total">
-           <p>Total Represented Market Cap <span>>$650M</span></p>
+           <p>Total Represented Market Cap <span>$650,746,645</span></p>
        </div>
        <?php echo $projectView; ?>
     </div>
