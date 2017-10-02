@@ -40,7 +40,7 @@ $ethPrice = $priceResult['data']['amount'];
    NOTICE: The order of which they are displayed  equeals the order of the tickers given here
 */
 
-$tickers = array("ANT","CFI", "DNT", "DNA", "RSC", "HSR", "ICN", "IND", "LKK", "SAN");
+$tickers = array("ANT", "CFI", "DAP", "DNT", "DNA", "RSC", "GAT", "HSR", "PREB", "ICN", "IND", "LKK", "SAN", "VIC");
 
 /* get balances */
 
@@ -132,7 +132,7 @@ $projectData = [
         "description" => "Manage entire organisations using the blockchain."
     ],
 
-    "" => [
+    "PREA" => [
         "img" => "img/projects/attores.png",
         "projectid" => "Attores",
         "collected" => "Ξ",
@@ -148,7 +148,7 @@ $projectData = [
         "description" => "Distributed global platform that connects exceptional startups, experts and investors worldwide."
     ],
 
-    "" => [
+    "DAP" => [
         "img" => "img/projects/dappbase.png",
         "projectid" => "Dappbase.com",
         "collected" => "Ξ",
@@ -161,7 +161,7 @@ $projectData = [
         "projectid" => "district0x",
         "collected" => "Ξ43,170.0",
         "status" => $certified,
-        "description" => "A network of decentralized marketplaces and communities"
+        "description" => "A network of decentralized marketplaces and communities."
     ],
 
     "DNA" => [
@@ -196,6 +196,14 @@ $projectData = [
         "description" => "A decentralized and open-source cross-platform cryptocurrency."
     ],
 
+    "PREB" => [
+        "img" => "img/projects/iconiqlab.png",
+        "projectid" => "IconiqLab",
+        "collected" => '$',
+        "status" => $verifying,
+        "description" => "Seed funding wallet and accelerator that helps crypto, blockchain and technology startups run their own ICOs."
+    ],
+
     "ICN" => [
         "img" => "img/projects/iconomi.png",
         "projectid" => "Iconomi",
@@ -220,6 +228,22 @@ $projectData = [
         "description" => "Blockchain-based marketplace where financial instruments can be traded and settled P2P."
     ],
 
+    "ART" => [
+        "img" => "img/projects/maecenas.png",
+        "projectid" => "Maecenas",
+        "collected" => "Ξ48,555",
+        "status" => $verifying,
+        "description" => "Decentralized art investment platform — where anyone can own a piece of a Picasso."
+    ],
+
+    "MCI" => [
+        "img" => "img/projects/musiconomi.png",
+        "projectid" => "Musiconomi",
+        "collected" => "Ξ17,648",
+        "status" => $verifying,
+        "description" => "A global music economy that works for everyone."
+    ],
+
     "SAN" => [
         "img" => "img/projects/santiment.png",
         "projectid" => "Santiment",
@@ -240,7 +264,7 @@ $projectData = [
         "img" => "img/projects/virgilcapital.png",
         "projectid" => "Virgil Capital",
         "collected" => "Ξ",
-        "status" => $certified,
+        "status" => $verifying,
         "description" => "Investment firm that specializes in real estate and angel investing."
     ]
    
@@ -331,10 +355,9 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
             <div id="close" onclick="shLearn()">
                 <i class="fa fa-close"></i>
             </div>
-            <h2>PROJECT TRANSPARENCY LAUNCHED BY SIXTEEN INDUSTRY LEADERS, ICO SUMMIT, 2 OCTOBER 2017 (VIENNA, AUSTRIA)</h2>
-            <h3>Aragon, Cofound.it, District0x, Encrypgen, Etherisc, Hcash, Iconomi, Indorse, Lykke, Santiment, Attores,
-            Dappbase, Gatcoin, Iconiq, Virgil Capital and KPMG jointly launch a voluntary disclosure initiative called,
-            Project Transparency</h3>
+            <h2>PROJECT TRANSPARENCY LAUNCHED BY SIXTEEN INDUSTRY LEADERS, EMBARGOED UNTIL ICO SUMMIT, 2 OCTOBER 2017 (VIENNA, AUSTRIA)</h2>
+            <h3>Aragon, Cofound.it, District0x, Encrypgen, Etherisc, Hcash, Iconomi, Indorse, Lykke, Santiment, Dappbase, GATCOIN,
+            IconiqLab, Virgil Capital, Musiconomi and Maecenas</h3>
             <p><em>Goal to create a self regulated, industry led movement toward greater transparency and accountability within
             the Blockchain sector for investors and the community</em></p>
             <ul>
@@ -344,13 +367,14 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
                 <li>Aim to improve regulatory procedures and disclosure within digital currency sector</li>
                 <li>Ambition for industry-wide adoption of Project Transparency for clearer disclosures</li>
             </ul>
-            <p>Santiment, (<a href="https://santiment.net" target="_blank">santiment.net</a>) the world’s first crypto-market datafeed platform, today announces at the Vienna ICO-Summit that it
+            <p>Santiment, (<a href="https://santiment.net" target="_blank">santiment.net</a>) the world’s first crypto-market datafeed
+            platform, today announces at the Vienna ICO-Summit that it
             has worked with 15 other projects to launch Project Transparency. The voluntary initiative aims to encourage disclosure
             of wallets controlled by a project and provide a voluntary explanation of any expenditure greater than 0.5% of the
             funds collected.</p>
-            <p>Santiment joins a number of ethical, industry leading digital asset industry players including, Aragon, Cofound.it,
-            District0x, Encrypgen, Etherisc, Hcash, Iconomi, Indorse, Lykke, Attores, Dappbase, Gatcoin, Iconiq, Virgil Capital and
-            KPMG to present the long term ambition is to provide potential investors and the community with greater transparency and
+            <p>Santiment joins a number of ethical, industry leading digital asset industry players including Aragon, Cofound.it,
+            District0x, Encrypgen, Etherisc, Hcash, Iconomi, Indorse, Lykke, Santiment, Dappbase, GATCOIN, IconiqLab, Virgil Capital,
+            Musiconomi and Maecenas to present the long term ambition is to provide potential investors and the community with greater transparency and
             accountability for funds raised as the ICO space sees greater regulatory scrutiny in many markets and even legal restriction
             in China and Korea.</p>
             <p>Maksim Balashevich, CEO and Founder of Santiment, said: "With the rapid rise of digital currencies and proliferation of
@@ -361,7 +385,7 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
             and for manpower to process applications and keep the initiative staffed. Any Blockchain project can join the initiative,
             the only criteria is to disclose the wallets controlled, funds held and explain any expenditures over 0.5% of the funds
             raised.</p>
-            <p>With over $650M USD of market capitalisation represented by Project Transparency, there is significant momentum for this
+            <p>With more than $650M USD of market capitalisation represented by Project Transparency, there is significant momentum for this
             industry led initiative. The evolution of next generation levels of transparency is important as it matures and continues its
             journey towards self governance in the tokenized economy. Taiyang Zhang CEO of pre-ICO project Dappbase, and GATCOIN’s Simon
             Cheong explained that their support for Project Transparency stemmed from their imminent funding goals and the investor
