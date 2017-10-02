@@ -17,7 +17,10 @@ INSERT INTO project (ticker, name) VALUES
   /* ('', 'Musiconomi'), */
   ('SAN', 'Santiment'),
   ('SNT', 'Status.im'),
-  ('VIC', 'Virgil Capital');
+  ('VIC', 'Virgil Capital')
+
+ON CONFLICT (name) DO UPDATE
+  SET ticker = EXCLUDED.ticker;
 
 /* Insert known addresses */
 INSERT INTO project_eth_address (project_id, address)
