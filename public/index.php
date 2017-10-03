@@ -56,13 +56,10 @@ function getWallets($ticker_list) {
 
     /* Get current wallet data */
 
-    $sql = "SELECT * FROM wallet_data WHERE ticker in (".$sql_tickers.")";
-
     $sql = <<<SQL
 SELECT 
   ticker,
-  project_eth_address.address AS address,
-  latest_eth_wallet_data.balance AS balance
+  SUM(latest_eth_wallet_data.balance) AS balance
 
 FROM 
   project,
@@ -71,7 +68,11 @@ FROM
 
 WHERE
   project.id = project_eth_address.project_id AND
-  project_eth_address.address = latest_eth_wallet_data.address;
+  project_eth_address.address = latest_eth_wallet_data.address
+
+GROUP BY
+  ticker
+
 SQL;
 
     $result = pg_query($conn, $sql);
@@ -97,6 +98,12 @@ SQL;
 }
 
 $walletData = getWallets($tickers);
+
+$totalMarketCap = array_reduce( $walletData, function ($aggregate, $wallet) {
+    $aggregate += $wallet['market_cap'];
+    return $aggregate;
+}, 0);
+
 
 function balanceStr($ticker) {
     global $walletData;
@@ -340,7 +347,7 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
 
     <div class="content">
         <div class="project total">
-           <p>Total Represented Market Cap <span>$650,746,645</span></p>
+            <p>Total Represented Market Cap <span>$<?php echo number_format($totalMarketCap, 0); ?></p>
        </div>
        <?php echo $projectView; ?>
     </div>
