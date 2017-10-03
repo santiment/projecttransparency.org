@@ -51,6 +51,21 @@ INSERT INTO project_eth_address (project_id, address)
 ON CONFLICT (address) DO UPDATE
   SET address = EXCLUDED.address;
 
+INSERT INTO project_btc_address (project_id, address)
+  SELECT
+    project.id,
+    t.address
+  FROM
+    project,
+    (VALUES
+      ('Encrypgen', '13MoQt2n9cHNzbpt8PfeVYp2cehgzRgj6v')
+    ) AS t (name, address)
+  WHERE
+    project.name = t.name
+
+ON CONFLICT (address) DO UPDATE
+  SET address = EXCLUDED.address;
+
 
 /* Set known addresses to tracked */
 
@@ -61,4 +76,9 @@ INSERT INTO tracked_eth (address)
     project_eth_address
 ON CONFLICT DO NOTHING;
 
-  
+INSERT INTO tracked_btc (address)
+  SELECT
+    address
+  FROM
+    project_btc_address
+ON CONFLICT DO NOTHING;

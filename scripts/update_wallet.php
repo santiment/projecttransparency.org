@@ -174,5 +174,14 @@ SQL;
      pg_query($conn, $sql);
 }
 
+// Run also btc updates. We add it here instead of changind the
+// systemd script, because changing the script right now would require
+// restart and IP change
+
+function updateBTC() {
+    require __DIR__ . "/update_btc.php";
+};
+
+updateBTC();
 ?>
 
