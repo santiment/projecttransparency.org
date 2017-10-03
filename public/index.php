@@ -269,7 +269,7 @@ $projectData = [
     "HSR" => [
         "img" => "img/projects/hcash.png",
         "projectid" => "Hshare",
-        "collected" => "BTC21,000",
+        "collected" => "Ƀ21,000",
         "status" => $verifying,
         "description" => "A decentralized and open-source cross-platform cryptocurrency."
     ],
@@ -293,7 +293,7 @@ $projectData = [
     "IND" => [
         "img" => "img/projects/indorse.png",
         "projectid" => "Indorse",
-        "collected" => '$9,026.77',
+        "collected" => 'Ξ27,422',
         "status" => $verifying,
         "description" => "Decentralised professional networking platform."
     ],
