@@ -29,10 +29,14 @@ if (!$conn) {
 setlocale(LC_MONETARY, 'en_US');
 
 $ethPrice = 0;
-
 $priceResult = json_decode(file_get_contents('https://api.coinbase.com/v2/prices/ETH-USD/sell'),true);
-
 $ethPrice = $priceResult['data']['amount'];
+
+/* get BTC Price */
+$btcPrice = 0;
+$btcPriceResult = json_decode(file_get_contents('https://api.coinbase.com/v2/prices/BTC-USD/sell'), true);
+$btcPrice = $btcPriceResult['data']['amount'];
+$satoshiPrice = $btcPrice / 100000000;
 
 
 
@@ -49,38 +53,87 @@ function getWallets($ticker_list) {
 
     global $conn;
     global $ethPrice;
+    global $satoshiPrice;
 
     
     $quoted = array_map( function ($token) { return "'".$token."'"; }, $ticker_list );
     $sql_tickers = join(", ", $quoted);
 
     /* Get current wallet data */
-
     $sql = <<<SQL
-SELECT 
+
+SELECT
   ticker,
-  SUM(latest_eth_wallet_data.balance) AS balance
+  eth_balance,
+  satoshi_balance
 
 FROM 
-  project,
-  project_eth_address,
-  latest_eth_wallet_data
+  (
+    SELECT
+      ticker,
+      SUM(latest_eth_wallet_data.balance) AS eth_balance
+    FROM
+      project,
+      project_eth_address,
+      latest_eth_wallet_data
+    WHERE
+      project.id = project_eth_address.project_id AND
+      project_eth_address.address = latest_eth_wallet_data.address
 
-WHERE
-  project.id = project_eth_address.project_id AND
-  project_eth_address.address = latest_eth_wallet_data.address
+    GROUP BY
+      ticker
+  ) as eth
 
-GROUP BY
-  ticker
+  NATURAL FULL OUTER JOIN
+
+  (
+    SELECT
+      ticker,
+      SUM(latest_btc_wallet_data.satoshi_balance) AS satoshi_balance
+    FROM
+      project,
+      project_btc_address,
+      latest_btc_wallet_data
+    WHERE
+      project.id = project_btc_address.project_id AND
+      project_btc_address.address = latest_btc_wallet_data.address
+
+    GROUP BY
+      ticker
+  ) as btc;
 
 SQL;
+
+//     $sql = <<<SQL
+// SELECT
+//   ticker,
+//   SUM(latest_eth_wallet_data.balance) AS eth_balance,
+//   SUM(latest_btc_wallet_data.satoshi_balance) AS satoshi_balance,
+
+// FROM
+//   project,
+//   project_eth_address,
+//   latest_eth_wallet_data,
+//   latest_btc_wallet_data
+
+// WHERE
+//   project.id = project_eth_address.project_id AND
+//   project_eth_address.address = latest_eth_wallet_data.address
+
+// GROUP BY
+//   ticker
+
+// SQL;
 
     $result = pg_query($conn, $sql);
 
     while ($row = pg_fetch_assoc($result)) {
         $ticker = $row['ticker'];
-        $wallets[$ticker]['balance'] = $row['balance'];
-        $wallets[$ticker]['usd_balance'] = $row['balance'] * $ethPrice;
+        $wallets[$ticker]['eth_balance'] = $row['eth_balance'];
+        $satoshi_balance = $row['satoshi_balance'];
+        $wallets[$ticker]['btc_balance'] = $satoshi_balance / 100000000;
+        $wallets[$ticker]['usd_balance'] = ($row['eth_balance'] * $ethPrice)
+                                         + ($satoshi_balance * $satoshiPrice);
     }
 
     /* Get current market cap */
@@ -107,11 +160,29 @@ $totalMarketCap = array_reduce( $walletData, function ($aggregate, $wallet) {
 
 function balanceStr($ticker) {
     global $walletData;
-    if ($walletData[$ticker]['balance'] == null) {
+
+    $result = "";
+
+    //Write USD balance
+
+    if ($walletData[$ticker]['usd_balance'] == null) {
         return "Verifying";
     }
-    return "$". number_format( $walletData[$ticker]['usd_balance'], 0)
-              . "<br/>Ξ" . number_format( $walletData[$ticker]['balance'], 1);
+    else {
+        $result = $result . "$" . number_format( $walletData[$ticker]['usd_balance'], 0);
+    };
+
+    //Write BTC balance (if any)
+    if (($walletData[$ticker]['btc_balance'] != null) and ($walletData[$ticker]['btc_balance']> 0.049)) {
+        $result = $result . "<br/>BTC " . number_format( $walletData[$ticker]['btc_balance'], 1);
+    }
+
+    //Write ETH balance (if any)
+    if (($walletData[$ticker]['eth_balance'] != null) and ($walletData[$ticker]['eth_balance']> 0.049)) {
+        $result = $result . "<br/>Ξ" . number_format( $walletData[$ticker]['eth_balance'], 1);
+    }
+
+    return $result;
 }
 
 function marketCapStr($ticker) {
@@ -323,7 +394,7 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
     <script src="https://use.fontawesome.com/6f993f4769.js"></script>
     <link href="css/style.css" rel="stylesheet">
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
-    <script async src=“https://www.googletagmanager.com/gtag/js?id=UA-84150740-2“></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-84150740-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments)};
