@@ -198,7 +198,7 @@ $projectData = [
 
     "PREB" => [
         "img" => "img/projects/iconiqlab.png",
-        "projectid" => "IconiqLab",
+        "projectid" => "Iconiq Lab",
         "collected" => '$',
         "status" => $verifying,
         "description" => "Seed funding wallet and accelerator that helps crypto, blockchain and technology startups run their own ICOs."
@@ -357,7 +357,7 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
             </div>
             <h2>PROJECT TRANSPARENCY LAUNCHED BY SIXTEEN INDUSTRY LEADERS, EMBARGOED UNTIL ICO SUMMIT, 2 OCTOBER 2017 (VIENNA, AUSTRIA)</h2>
             <h3>Aragon, Cofound.it, District0x, Encrypgen, Etherisc, Hcash, Iconomi, Indorse, Lykke, Santiment, Dappbase, GATCOIN,
-            IconiqLab, Virgil Capital, Musiconomi and Maecenas</h3>
+            Iconiq Lab, Virgil Capital, Musiconomi and Maecenas</h3>
             <p><em>Goal to create a self regulated, industry led movement toward greater transparency and accountability within
             the Blockchain sector for investors and the community</em></p>
             <ul>
@@ -373,7 +373,7 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
             of wallets controlled by a project and provide a voluntary explanation of any expenditure greater than 0.5% of the
             funds collected.</p>
             <p>Santiment joins a number of ethical, industry leading digital asset industry players including Aragon, Cofound.it,
-            District0x, Encrypgen, Etherisc, Hcash, Iconomi, Indorse, Lykke, Santiment, Dappbase, GATCOIN, IconiqLab, Virgil Capital,
+            District0x, Encrypgen, Etherisc, Hcash, Iconomi, Indorse, Lykke, Santiment, Dappbase, GATCOIN, Iconiq Lab, Virgil Capital,
             Musiconomi and Maecenas to present the long term ambition is to provide potential investors and the community with greater transparency and
             accountability for funds raised as the ICO space sees greater regulatory scrutiny in many markets and even legal restriction
             in China and Korea.</p>
@@ -393,6 +393,7 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
             <p><strong>About Santiment:</strong> Santiment is the world's first crypto-market big data network, combining market datafeeds, sentiment
             analysis, blockchain analytics, and everything else crypto-traders need for this emerging market. Built by traders for traders,
             the network gives participants an information edge over the competitors thanks to machine learning and the wisdom of the crowd.</p>
+            <br />
             <p><strong>Contact for Santiment.net</strong><br />
                Dorjee Sun: <a href="mailto:dorjee.s@santiment.net">dorjee.s@santiment.net</a><br />
                Contact: +61 416 292 245<br />

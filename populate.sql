@@ -3,7 +3,7 @@ INSERT INTO project (ticker, name) VALUES
   ('ANT', 'Aragon'),
   /* ('', 'Attores'), */
   ('CFI', 'Cofound.it'),
-  ('DAP', 'Dappbase.com'),
+  ('DAP', 'Dappbase'),
   ('DNT', 'district0x'),
   ('DNA', 'Encrypgen'),
   ('RSC', 'Etherisc'),
