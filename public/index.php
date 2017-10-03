@@ -174,7 +174,7 @@ function balanceStr($ticker) {
 
     //Write BTC balance (if any)
     if (($walletData[$ticker]['btc_balance'] != null) and ($walletData[$ticker]['btc_balance']> 0.049)) {
-        $result = $result . "<br/>BTC " . number_format( $walletData[$ticker]['btc_balance'], 1);
+        $result = $result . "<br/>Ƀ" . number_format( $walletData[$ticker]['btc_balance'], 1);
     }
 
     //Write ETH balance (if any)
