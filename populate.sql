@@ -1,27 +1,27 @@
 /* Populate database with projecttransparency data */
-INSERT INTO project (ticker, name) VALUES
-  ('ANT', 'Aragon'),
+INSERT INTO project (ticker, name, coinmarketcap_id) VALUES
+  ('ANT', 'Aragon', 'aragon'),
   /* ('', 'Attores'), */
-  ('CFI', 'Cofound.it'),
-  ('DAP', 'Dappbase'),
-  ('DNT', 'district0x'),
-  ('DNA', 'Encrypgen'),
-  ('RSC', 'Etherisc'),
-  ('GAT', 'Gatcoin.io'),
-  ('HSR', 'Hshare'),
-  ('ICN', 'Iconomi'),
-  ('IND', 'Indorse'),
+  ('CFI', 'Cofound.it', 'cofound-it'),
+  ('DAP', 'Dappbase', null),
+  ('DNT', 'district0x', 'district0x'  ),
+  ('DNA', 'Encrypgen', null),
+  ('RSC', 'Etherisc', null),
+  ('GAT', 'Gatcoin.io', null),
+  ('HSR', 'Hshare', 'hshare'),
+  ('ICN', 'Iconomi', 'iconomi'),
+  ('IND', 'Indorse', 'indorse-token'),
   /* ('', 'IconiqLab'), */
-  ('KPMG', 'KPMG'),
-  ('LKK', 'Lykke'),
-  ('ART', 'Maecenas'),
-  ('MCI', 'Musiconomi'),
-  ('SAN', 'Santiment'),
-  ('SNT', 'Status.im'),
-  ('VIC', 'Virgil Capital')
+  /* ('KPMG', 'KPMG'), */
+  ('LKK', 'Lykke', 'lykke'),
+  ('ART', 'Maecenas', null),
+  ('MCI', 'Musiconomi', null),
+  ('SAN', 'Santiment', 'santiment'),
+  ('SNT', 'Status.im', 'status'),
+  ('VIC', 'Virgil Capital', null)
 
 ON CONFLICT (name) DO UPDATE
-  SET ticker = EXCLUDED.ticker;
+  SET (ticker, coinmarketcap_id) = (EXCLUDED.ticker, EXCLUDED.coinmarketcap_id);
 
 /* Insert known addresses */
 INSERT INTO project_eth_address (project_id, address)

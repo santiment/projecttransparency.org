@@ -25,7 +25,6 @@ if (!$conn) {
     throw new Exception("Connection failed: " . $error["message"]);
 }
 
-
 $result = json_decode(file_get_contents('https://api.coinmarketcap.com/v1/ticker/'),true);
 
 // Process coins in order reverse to the market valuation. In this way
@@ -34,37 +33,47 @@ $result = json_decode(file_get_contents('https://api.coinmarketcap.com/v1/ticker
 
 $result = array_reverse($result);
 
-foreach($result as $r){
-    //check if ticker is in table
-    $sql = "SELECT * from cmm_data where ticker='" . $r['symbol'] . "'";
-    $result = pg_query($conn, $sql);
+$values_array = array_map( function ($r){
+    $id = pg_escape_string($r['id']);
+    $name = pg_escape_string($r['name']);
+    
+    $mc = $r['market_cap_usd'];
+    if (!is_numeric($mc)) {
+        //echo "ERROR:", json_encode($r), "\n";
+        $mc = 'null';
+    }
 
-    $market_cap = $r['market_cap_usd'];
-    if($market_cap === null || $market_cap === '')
+    $pr = $r['price_usd'];
+    if(!is_numeric($pr))
     {
-        $market_cap = 'null';
+        $pr = 'null';
     }
 
-    $price_usd = $r['price_usd'];
-    if($price_usd === null || $price_usd === '')
-    {
-        $price_usd = 'null';
+    $smb = pg_escape_string($r['symbol']);
+
+    $lu = $r['last_updated'];
+    if (!is_numeric($lu)) {
+        $lu = 0;
     }
 
-    if(pg_num_rows($result) === 0){
-        //echo "Inserting ticker ".$r['symbol']."\n";
-        $sql = "INSERT INTO cmm_data (ticker,market_cap,price_usd,active) VALUES ('".$r['symbol']."', ".$market_cap.",".$price_usd.", 1)";
-    }
-    else
-    {
-        //echo "Updating ticker ".$r['symbol']."\n";
-        $sql = "UPDATE  cmm_data SET market_cap = " . $market_cap . " , price_usd= ".$price_usd."  WHERE ticker = '".$r['symbol']."'";
-    }
-    echo $sql;
-    echo "\n";
-    pg_query($conn, $sql);
-}
+    return "('{$id}','{$name}', '{$smb}', {$pr}, {$mc}, to_timestamp({$lu}) )";
+    
+}, $result);
 
+$values = join(",\n", $values_array);
+
+$sql = <<<SQL
+INSERT INTO latest_coinmarketcap_data (id, name, symbol, price_usd, market_cap_usd, update_time)
+VALUES {$values}
+
+ON CONFLICT (id) DO UPDATE SET 
+  (name, symbol, price_usd, market_cap_usd, update_time) = 
+  (EXCLUDED.name, EXCLUDED.symbol, EXCLUDED.price_usd, EXCLUDED.market_cap_usd, EXCLUDED.update_time)
+SQL;
+
+echo $sql;
+echo "\n";
+$qr = pg_query($conn, $sql);
 
 
 ?>

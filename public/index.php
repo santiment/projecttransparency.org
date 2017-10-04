@@ -138,12 +138,29 @@ SQL;
 
     /* Get current market cap */
 
-    $sql = "SELECT * FROM cmm_data WHERE ticker in (".$sql_tickers.")";
+    $sql = <<<QUERY
+
+SELECT
+  p.ticker as ticker,
+  c.id as id,
+  c.market_cap_usd as market_cap_usd
+FROM
+  project as p,
+  latest_coinmarketcap_data as c
+WHERE
+  p.coinmarketcap_id = c.id AND
+  p.ticker in ({$sql_tickers});
+
+QUERY;
+
+    //$sql = "SELECT * FROM cmm_data WHERE ticker in (".$sql_tickers.")";
+    error_log($sql);
     $result = pg_query($conn, $sql);
 
     while ($row = pg_fetch_assoc($result)) {
+        error_log($row['ticker'] . " ". $row['id']);
         $ticker = $row['ticker'];
-        $wallets[$ticker]['market_cap'] = $row['market_cap'];
+        $wallets[$ticker]['market_cap'] = $row['market_cap_usd'];
     }
 
     return $wallets;
