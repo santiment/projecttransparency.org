@@ -276,10 +276,11 @@ label {
 .projectid {
     float: left;
     font-size: 21px;
-    width: 30%;
+    width: 35%;
 }
 .projectid img {
-    margin: 28px 16px 28px 28px;
+    padding-top: 10px;
+    margin: 28px 16px 38px 28px;
     vertical-align: middle;
     width: 48px;
 }
@@ -287,7 +288,7 @@ label {
     float: left;
     line-height: 1.2;
     overflow: hidden;
-    width: 50%;
+    width: 45%;
 }
 .marketcap,
 .collected,

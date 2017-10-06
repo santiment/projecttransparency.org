@@ -231,7 +231,7 @@ $projectData = [
     "PREA" => [
         "img" => "img/projects/attores.png",
         "projectid" => "Attores",
-        "collected" => "Ξ",
+        "collected" => "",
         "status" => $verifying,
         "description" => "Blockchain applications & smart contracts (digital signatures and certificates)."
     ],
@@ -279,16 +279,16 @@ $projectData = [
     "EXP/LAB" => [
             "img" => "img/projects/expanse.png",
             "projectid" => "Expanse/Tokenlab",
-            "collected" => "Ξ",
-            "status" => $verifying,
+            "collected" => "",
+            "status" => $preico,
             "description" => "Expanse is a dAapp development organization that also has its own Ethereum compatible blockchain. Our latest project is Tokenlab."
         ],
 
     "GAT" => [
         "img" => "img/projects/gatcoin.png",
         "projectid" => "Gatcoin",
-        "collected" => "Ξ",
-        "status" => $verifying,
+        "collected" => "",
+        "status" => $preico,
         "description" => "Global distributed shopping platform."
     ],
 
@@ -303,8 +303,8 @@ $projectData = [
     "PREB" => [
         "img" => "img/projects/iconiqlab.png",
         "projectid" => "Iconiq Lab",
-        "collected" => '$',
-        "status" => $verifying,
+        "collected" => "",
+        "status" => $preico,
         "description" => "Seed funding wallet and accelerator that helps crypto, blockchain and technology startups run their own ICOs."
     ],
 
@@ -367,8 +367,8 @@ $projectData = [
     "VIC" => [
         "img" => "img/projects/virgilcapital.png",
         "projectid" => "Virgil Capital",
-        "collected" => "Ξ",
-        "status" => $verifying,
+        "collected" => "",
+        "status" => $preico,
         "description" => "Investment firm that specializes in real estate and angel investing."
     ]
    
