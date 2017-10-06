@@ -23,8 +23,10 @@ body {
     }
 }
 .colorblend {
+    /* background: url("../img/bg_wave6.png") center bottom no-repeat, linear-gradient(270deg, #c82f3f, #316bae, #309d81); */
     background: linear-gradient(270deg, #c82f3f, #316bae, #309d81);
     background-size: 300% 300%;
+    /* background-attachment: fixed; */
 
     -webkit-animation: AnimationName 120s ease infinite;
     -moz-animation: AnimationName 120s ease infinite;
@@ -32,6 +34,9 @@ body {
 }
 .noscroll {
     overflow: hidden;
+}
+.fa-btc {
+    color: #6e707d;
 }
 
 @-webkit-keyframes AnimationName {
@@ -77,6 +82,16 @@ body {
     /* height: 100%; */
     /* overflow: auto; */
 }
+@media (max-width: 767px) {
+    .wrapper {
+        background: url("../img/bg_wave6.png") center 88px no-repeat;
+        background-size: auto;
+        background-attachment: fixed;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+}
 
 h1 {
     color: #fff;
@@ -114,7 +129,7 @@ h2 {
 a {
     color: #009663;
     cursor: pointer;
-    text-decoration: none;
+    /* text-decoration: none; */
 }
 a:hover {
     text-decoration: underline;
@@ -143,6 +158,13 @@ label {
     margin: 0 auto;
     text-align: center;
     width: 50%;
+}
+.header a {
+    color: rgba(255,255,255,0.8);
+    font-weight: 700;
+}
+.header a:hover {
+    color: rgba(255,255,255,1);
 }
 .header img {
     width: 64px;
@@ -353,6 +375,9 @@ label {
     /* background: rgba(251, 161, 83, 1.0); */
     /* background: rgba(220, 47, 63, 0.80); */
     background: rgba(49, 107, 174, 0.8);
+}
+.preico {
+    background: rgba(61, 68, 80, 0.3);
 }
 
 #learn {

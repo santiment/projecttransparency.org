@@ -44,7 +44,7 @@ $satoshiPrice = $btcPrice / 100000000;
    NOTICE: The order of which they are displayed  equeals the order of the tickers given here
 */
 
-$tickers = array("ANT", "CFI", "DAP", "DNT", "DNA", "RSC", "GAT", "HSR", "PREB", "ICN", "IND", "LKK", "ART", "MCI", "SAN", "VIC");
+$tickers = array("ANT", "CFI", "DAP", "DNT", "DNA", "RSC", "EXP/LAB", "GAT", "HSR", "PREB", "ICN", "IND", "LKK", "ART", "MCI", "SAN", "VIC");
 
 /* get balances */
 
@@ -216,6 +216,7 @@ function marketCapStr($ticker) {
 
 $certified = '<div class="rating certified"><img src="img/certified.png" />Certified</div>';
 $verifying = '<div class="rating verifying"><img src="img/verifying.png" />Verifying</div>';
+$preico = '<div class="rating preico"><img src="img/preico.png" />Pre-ICO</div>';
 
 $projectData = [];
 $projectData = [
@@ -246,8 +247,8 @@ $projectData = [
     "DAP" => [
         "img" => "img/projects/dappbase.png",
         "projectid" => "Dappbase",
-        "collected" => "Ξ",
-        "status" => $verifying,
+        "collected" => "",
+        "status" => $preico,
         "description" => "Powerful and accessible tools for decentralized app development."
     ],
 
@@ -262,7 +263,7 @@ $projectData = [
     "DNA" => [
         "img" => "img/projects/encrypgen.png",
         "projectid" => "Encrypgen",
-        "collected" => "Ξ",
+        "collected" => "",
         "status" => $verifying,
         "description" => "Enchanced security for safe cloud storage and sharing of genomic data."
     ],
@@ -274,6 +275,14 @@ $projectData = [
         "status" => $verifying,
         "description" => "A decentralized insurance and reinsurance marketplace."
     ],
+
+    "EXP/LAB" => [
+            "img" => "img/projects/expanse.png",
+            "projectid" => "Expanse/Tokenlab",
+            "collected" => "Ξ",
+            "status" => $verifying,
+            "description" => "Expanse is a dAapp development organization that also has its own Ethereum compatible blockchain. Our latest project is Tokenlab."
+        ],
 
     "GAT" => [
         "img" => "img/projects/gatcoin.png",
@@ -428,7 +437,8 @@ $projectView = join("\n",array_map( "displayProject", $tickers));
         <h1>Project Transparency</h1>
         <p>Leading members of the blockchain and cryptocurrency industry unite to
         launch Project Transparency, a voluntary disclosure standard which aims to
-        bring self governance and greater transparency for investors and the community.</p>
+        bring self governance and greater transparency for investors and the community.
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGQjirTQfR9oZ_9hWjhfZTEjFkx4Gcavp7sfxYAFPNhTCxoQ/viewform" target="_blank">Contact us with questions</a></p>
         <a class="button home" onclick="shLearn()">Learn More</a>
         <a class="button home" href="https://docs.google.com/forms/d/e/1FAIpQLScsfn5pRQ8gQrrT_7tsEcyNHbM96hTNyk9MUCtJSY-_MWgHcw/viewform" target="_blank">Submit a Project</a>
     </div>
