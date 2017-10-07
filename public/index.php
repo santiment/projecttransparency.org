@@ -170,7 +170,10 @@ QUERY;
 $walletData = getWallets($tickers);
 
 $totalMarketCap = array_reduce( $walletData, function ($aggregate, $wallet) {
-    $aggregate += $wallet['market_cap'];
+    if ( array_key_exists('market_cap', $wallet)) {
+        $aggregate += $wallet['market_cap'];
+    };
+
     return $aggregate;
 }, 0);
 
@@ -180,22 +183,26 @@ function balanceStr($ticker) {
 
     $result = "";
 
-    //Write USD balance
+    if( !array_key_exists($ticker, $walletData )) {
+        return "Veryfying";
+    }
+    $wallet = $walletData[$ticker];
 
-    if ($walletData[$ticker]['usd_balance'] == null) {
+
+    //Write USD balance
+    if ( !array_key_exists('usd_balance', $wallet) ) {
         return "Verifying";
     }
-    else {
-        $result = $result . "$" . number_format( $walletData[$ticker]['usd_balance'], 0);
-    };
+
+    $result = $result . "$" . number_format( $wallet['usd_balance'], 0);
 
     //Write BTC balance (if any)
-    if (($walletData[$ticker]['btc_balance'] != null) and ($walletData[$ticker]['btc_balance']> 0.049)) {
+    if (array_key_exists('btc_balance', $wallet) and $wallet['btc_balance'] > 0.049) {
         $result = $result . "<br/>Ƀ" . number_format( $walletData[$ticker]['btc_balance'], 1);
     }
 
     //Write ETH balance (if any)
-    if (($walletData[$ticker]['eth_balance'] != null) and ($walletData[$ticker]['eth_balance']> 0.049)) {
+    if (array_key_exists('eth_balance', $wallet) and ($walletData[$ticker]['eth_balance']> 0.049)) {
         $result = $result . "<br/>Ξ" . number_format( $walletData[$ticker]['eth_balance'], 1);
     }
 
@@ -205,10 +212,14 @@ function balanceStr($ticker) {
 function marketCapStr($ticker) {
     global $walletData;
 
-    if ($walletData[$ticker]['market_cap'] == null) {
-        return "Verifying";
+    if (array_key_exists( $ticker, $walletData) and
+        array_key_exists( 'market_cap', $walletData[$ticker])) {
+        return "$". number_format( $walletData[$ticker]['market_cap'], 0);
     }
-    return "$". number_format( $walletData[$ticker]['market_cap'], 0);
+    else
+    {
+        return 'Verifying';
+    }
 }
 
 
