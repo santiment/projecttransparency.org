@@ -84,7 +84,7 @@ ON CONFLICT (address) DO UPDATE SET
 
 SQL;
 
-echo $sql;
+//echo $sql;
 pg_query($conn, $sql);
-
+echo "BTC update successful \n";
 ?>

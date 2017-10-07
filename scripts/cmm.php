@@ -71,9 +71,9 @@ ON CONFLICT (id) DO UPDATE SET
   (EXCLUDED.name, EXCLUDED.symbol, EXCLUDED.price_usd, EXCLUDED.market_cap_usd, EXCLUDED.update_time)
 SQL;
 
-echo $sql;
-echo "\n";
+//echo $sql;
+//echo "\n";
 $qr = pg_query($conn, $sql);
-
+echo "CMC update successful\n";
 
 ?>
