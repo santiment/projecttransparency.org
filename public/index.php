@@ -154,11 +154,11 @@ WHERE
 QUERY;
 
     //$sql = "SELECT * FROM cmm_data WHERE ticker in (".$sql_tickers.")";
-    error_log($sql);
+    //error_log($sql);
     $result = pg_query($conn, $sql);
 
     while ($row = pg_fetch_assoc($result)) {
-        error_log($row['ticker'] . " ". $row['id']);
+        //error_log($row['ticker'] . " ". $row['id']);
         $ticker = $row['ticker'];
         $wallets[$ticker]['market_cap'] = $row['market_cap_usd'];
     }
