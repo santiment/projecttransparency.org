@@ -1,12 +1,16 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
+
+try {
+    require __DIR__ . '/../vendor/autoload.php';
 
 /* Load env variables 
    The .env file is in the main dirctory, and __DIR__ should equal /public.
 */
-
-$dotenv = new Dotenv\Dotenv(__DIR__ . "/..");
-$dotenv->load();
+    $dotenv = new Dotenv\Dotenv(__DIR__ . "/..");
+    $dotenv->load();
+} catch (Exception $e) {
+    error_log("Caught exception:" . ($e->getMessage()));
+}
 
 /* Connect to database */
 $servername = getenv("DB_SERVER");
