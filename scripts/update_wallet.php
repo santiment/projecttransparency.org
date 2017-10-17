@@ -170,10 +170,11 @@ ON CONFLICT (address) DO UPDATE SET
 
 SQL;
 
-     echo $sql;
+     //echo $sql;
      pg_query($conn, $sql);
 }
 
+echo "ETH update successful\n";
 // Run also btc updates. We add it here instead of changind the
 // systemd script, because changing the script right now would require
 // restart and IP change

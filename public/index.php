@@ -1,12 +1,16 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
+
+try {
+    require __DIR__ . '/../vendor/autoload.php';
 
 /* Load env variables 
    The .env file is in the main dirctory, and __DIR__ should equal /public.
 */
-
-$dotenv = new Dotenv\Dotenv(__DIR__ . "/..");
-$dotenv->load();
+    $dotenv = new Dotenv\Dotenv(__DIR__ . "/..");
+    $dotenv->load();
+} catch (Exception $e) {
+    error_log("Caught exception:" . ($e->getMessage()));
+}
 
 /* Connect to database */
 $servername = getenv("DB_SERVER");
@@ -154,11 +158,11 @@ WHERE
 QUERY;
 
     //$sql = "SELECT * FROM cmm_data WHERE ticker in (".$sql_tickers.")";
-    error_log($sql);
+    //error_log($sql);
     $result = pg_query($conn, $sql);
 
     while ($row = pg_fetch_assoc($result)) {
-        error_log($row['ticker'] . " ". $row['id']);
+        //error_log($row['ticker'] . " ". $row['id']);
         $ticker = $row['ticker'];
         $wallets[$ticker]['market_cap'] = $row['market_cap_usd'];
     }
@@ -170,7 +174,10 @@ QUERY;
 $walletData = getWallets($tickers);
 
 $totalMarketCap = array_reduce( $walletData, function ($aggregate, $wallet) {
-    $aggregate += $wallet['market_cap'];
+    if ( array_key_exists('market_cap', $wallet)) {
+        $aggregate += $wallet['market_cap'];
+    };
+
     return $aggregate;
 }, 0);
 
@@ -180,22 +187,26 @@ function balanceStr($ticker) {
 
     $result = "";
 
-    //Write USD balance
-
-    if ($walletData[$ticker]['usd_balance'] == null) {
+    if( !array_key_exists($ticker, $walletData )) {
         return "Verifying";
     }
-    else {
-        $result = $result . "$" . number_format( $walletData[$ticker]['usd_balance'], 0);
-    };
+    $wallet = $walletData[$ticker];
+
+
+    //Write USD balance
+    if ( !array_key_exists('usd_balance', $wallet) ) {
+        return "Verifying";
+    }
+
+    $result = $result . "$" . number_format( $wallet['usd_balance'], 0);
 
     //Write BTC balance (if any)
-    if (($walletData[$ticker]['btc_balance'] != null) and ($walletData[$ticker]['btc_balance']> 0.049)) {
+    if (array_key_exists('btc_balance', $wallet) and $wallet['btc_balance'] > 0.049) {
         $result = $result . "<br/>Ƀ" . number_format( $walletData[$ticker]['btc_balance'], 1);
     }
 
     //Write ETH balance (if any)
-    if (($walletData[$ticker]['eth_balance'] != null) and ($walletData[$ticker]['eth_balance']> 0.049)) {
+    if (array_key_exists('eth_balance', $wallet) and ($walletData[$ticker]['eth_balance']> 0.049)) {
         $result = $result . "<br/>Ξ" . number_format( $walletData[$ticker]['eth_balance'], 1);
     }
 
@@ -205,10 +216,14 @@ function balanceStr($ticker) {
 function marketCapStr($ticker) {
     global $walletData;
 
-    if ($walletData[$ticker]['market_cap'] == null) {
-        return "Verifying";
+    if (array_key_exists( $ticker, $walletData) and
+        array_key_exists( 'market_cap', $walletData[$ticker])) {
+        return "$". number_format( $walletData[$ticker]['market_cap'], 0);
     }
-    return "$". number_format( $walletData[$ticker]['market_cap'], 0);
+    else
+    {
+        return 'Verifying';
+    }
 }
 
 
