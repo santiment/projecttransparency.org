@@ -62,7 +62,10 @@ INSERT INTO project_btc_address (project_id, address)
     project,
     (VALUES
       ('Encrypgen', '13MoQt2n9cHNzbpt8PfeVYp2cehgzRgj6v'),
-      ('Encrypgen', '16bv1XAqh1YadAWHgDWgxKuhhns7T2EywG')
+      ('Encrypgen', '16bv1XAqh1YadAWHgDWgxKuhhns7T2EywG'),
+      ('Encrypgen', '3PtQX3dKbUb7Q8LguBrWVcwddf2yCkDJW9'),
+      ('Encrypgen', '33TK711ktEUJxERdTtkoE5cTaPVsi3JDya'),
+      ('Encrypgen', '3BnvD37EBj9EN89wrruPV44KxpYrYKTfQB')
     ) AS t (name, address)
   WHERE
     project.name = t.name

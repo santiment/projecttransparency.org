@@ -38,6 +38,8 @@ function getBTCWallets($conn)
 }
 
 function getBTCBalance($address) {
+
+    sleep(10); //Sleeping to get past the blockchain rate limiter
     $url = "https://blockchain.info/balance?active=${address}";
     $t = file_get_contents($url);
     $res = json_decode($t, $assoc = true);
