@@ -188,7 +188,7 @@ function balanceStr($ticker) {
     $result = "";
 
     if( !array_key_exists($ticker, $walletData )) {
-        return "Veryfying";
+        return "Verifying";
     }
     $wallet = $walletData[$ticker];
 
