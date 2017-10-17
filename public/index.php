@@ -44,7 +44,7 @@ $satoshiPrice = $btcPrice / 100000000;
    NOTICE: The order of which they are displayed  equeals the order of the tickers given here
 */
 
-$tickers = array("ANT", "CFI", "DAP", "DNT", "DNA", "RSC", "EXP/LAB", "GAT", "HSR", "PREB", "ICN", "IND", "LKK", "ART", "MCI", "SAN", "VIC");
+$tickers = array("ANT", "AVT", "CFI", "DAP", "DNT", "DNA", "RSC", "EXP/LAB", "GAT", "HSR", "PREB", "ICN", "IND", "LKK", "ART", "MCI", "SAN", "VIC");
 
 /* get balances */
 
@@ -235,6 +235,14 @@ $projectData = [
         "status" => $verifying,
         "description" => "Blockchain applications & smart contracts (digital signatures and certificates)."
     ],
+
+    "AVT" => [
+            "img" => "img/projects/aventus.png",
+            "projectid" => "Aventus",
+            "collected" => "",
+            "status" => $verifying,
+            "description" => "Aventus is creating a fair, secure, and transparent protocol for ticket exchange that solves problems the biggest problems in the industry."
+        ],
 
     "CFI" => [
         "img" => "img/projects/cofoundit.png",

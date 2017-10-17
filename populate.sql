@@ -2,9 +2,10 @@
 INSERT INTO project (ticker, name, coinmarketcap_id) VALUES
   ('ANT', 'Aragon', 'aragon'),
   /* ('', 'Attores'), */
+  ('AVT', 'Aventus', null),
   ('CFI', 'Cofound.it', 'cofound-it'),
   ('DAP', 'Dappbase', null),
-  ('DNT', 'district0x', 'district0x'  ),
+  ('DNT', 'district0x', 'district0x'),
   ('DNA', 'Encrypgen', null),
   ('RSC', 'Etherisc', null),
   ('EXP/LAB', 'Expanse/Tokenlab', null),
@@ -33,6 +34,7 @@ INSERT INTO project_eth_address (project_id, address)
     project,
     (VALUES
       ('Aragon', '0xcafe1a77e84698c83ca8931f54a755176ef75f2c'),
+      ('Aventus', '0x035a401972f228b58dcae76bf318b54ed036d680'),
       ('district0x', '0xd20e4d854c71de2428e1268167753e4c7070ae68'),
       ('Encrypgen', '0x683a0aafa039406c104d814b9f244eea721445a7'),
       ('Etherisc', '0x9B0F6a5a667CB92aF0cd15DbE90E764e32f69e77'),
