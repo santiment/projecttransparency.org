@@ -28,15 +28,40 @@ body {
     background-size: 300% 300%;
     /* background-attachment: fixed; */
 
-    -webkit-animation: AnimationName 120s ease infinite;
-    -moz-animation: AnimationName 120s ease infinite;
-    animation: AnimationName 120s ease infinite;
+    /* -webkit-animation: MOVE-BG 120s ease infinite;
+    -moz-animation: MOVE-BG 120s ease infinite;
+    animation: MOVE-BG 120s ease infinite; */
 }
 .noscroll {
     overflow: hidden;
 }
 .fa-btc {
     color: #6e707d;
+}
+
+@-webkit-keyframes MOVE-BG {
+    from {
+        -webkit-transform: translateX(0);
+    }
+    to {
+        -webkit-transform: translateX(100%);
+    }
+}
+@-moz-keyframes MOVE-BG {
+    from {
+        -webkit-transform: translateX(0);
+    }
+    to {
+        -webkit-transform: translateX(100%);
+    }
+}
+@keyframes MOVE-BG {
+    from {
+        -webkit-transform: translateX(0);
+    }
+    to {
+        -webkit-transform: translateX(100%);
+    }
 }
 
 @-webkit-keyframes AnimationName {
