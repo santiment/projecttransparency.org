@@ -48,7 +48,7 @@ $satoshiPrice = $btcPrice / 100000000;
    NOTICE: The order of which they are displayed  equeals the order of the tickers given here
 */
 
-$tickers = array("ANT", "AVT", "CFI", "DAP", "DNT", "DNA", "RSC", "EXP/LAB", "GAT", "HSR", "PREB", "ICN", "IND", "LKK", "ART", "MCI", "SAN", "VIC");
+$tickers = array("ANT", "CFI", "DAP", "DNT", "DNA", "RSC", "EXP/LAB", "GAT", "HSR", "PREB", "ICN", "IND", "LKK", "ART", "MCI", "SAN", "VIC");
 
 /* get balances */
 
