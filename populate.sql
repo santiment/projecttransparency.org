@@ -3,6 +3,7 @@ INSERT INTO project (ticker, name, coinmarketcap_id) VALUES
   ('ANT', 'Aragon', 'aragon'),
   /* ('', 'Attores'), */
   ('AVT', 'Aventus', 'aventus'),
+  ('CORC', 'CellR Lab', null),
   ('CFI', 'Cofound.it', 'cofound-it'),
   ('DAP', 'Dappbase', null),
   ('DNT', 'district0x', 'district0x'),
@@ -21,6 +22,7 @@ INSERT INTO project (ticker, name, coinmarketcap_id) VALUES
   ('ART', 'Maecenas', 'maecenas'),
   ('MCI', 'Musiconomi', null),
   ('SAN', 'Santiment', 'santiment'),
+  ('SLR', 'SolarCoin', 'solarcoin'),
   ('SNT', 'Status.im', 'status'),
   ('VIC', 'Virgil Capital', null)
 
@@ -37,6 +39,7 @@ INSERT INTO project_eth_address (project_id, address)
     (VALUES
       ('Aragon', '0xcafe1a77e84698c83ca8931f54a755176ef75f2c'),
       ('Aventus', '0x035a401972f228b58dcae76bf318b54ed036d680'),
+      ('CellR Lab', '0x4Be816E8c192D6145B8c84579FbAf258f26a358A'),
       ('district0x', '0xd20e4d854c71de2428e1268167753e4c7070ae68'),
       ('Encrypgen', '0x683a0aafa039406c104d814b9f244eea721445a7'),
       ('Etherisc', '0x9B0F6a5a667CB92aF0cd15DbE90E764e32f69e77'),

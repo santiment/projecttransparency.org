@@ -48,7 +48,7 @@ $satoshiPrice = $btcPrice / 100000000;
    NOTICE: The order of which they are displayed  equeals the order of the tickers given here
 */
 
-$tickers = array("ANT", "AVT", "CFI", "DAP", "DNT", "DNA", "RSC", "EXP/LAB", "GAT", "HLN", "HSR", "PREB", "ICN", "IND", "LLA", "LKK", "ART", "MCI", "SAN", "VIC");
+$tickers = array("ANT", "AVT", "CORC", "CFI", "DAP", "DNT", "DNA", "RSC", "EXP/LAB", "GAT", "HLN", "HSR", "PREB", "ICN", "IND", "LLA", "LKK", "ART", "MCI", "SAN", "SLR", "VIC");
 
 /* get balances */
 
@@ -252,12 +252,20 @@ $projectData = [
     ],
 
     "AVT" => [
-            "img" => "img/projects/aventus.png",
-            "projectid" => "Aventus",
-            "collected" => "",
-            "status" => $verifying,
-            "description" => "Aventus is creating a fair, secure, and transparent protocol for ticket exchange that solves problems the biggest problems in the industry."
-        ],
+        "img" => "img/projects/aventus.png",
+        "projectid" => "Aventus",
+        "collected" => "",
+        "status" => $verifying,
+        "description" => "Aventus is creating a fair, secure, and transparent protocol for ticket exchange that solves problems the biggest problems in the industry."
+    ],
+
+    "CORC" => [
+        "img" => "img/projects/cellrlab.png",
+        "projectid" => "CellR Lab",
+        "collected" => "",
+        "status" => $preico,
+        "description" => "A service, a product and a marketplace all around wine and spirits. Traceability and counterfeit control."
+    ],
 
     "CFI" => [
         "img" => "img/projects/cofoundit.png",
@@ -359,7 +367,7 @@ $projectData = [
             "img" => "img/projects/lalena.png",
             "projectid" => "Lalena",
             "collected" => "",
-            "status" => $pre-ico,
+            "status" => $preico,
             "description" => "Philanthropic futures and speculation."
         ],
 
@@ -393,6 +401,14 @@ $projectData = [
         "collected" => "Ξ45,000.0",
         "status" => $certified,
         "description" => "Datafeeds and transparency platform for the crypto-markets."
+    ],
+
+    "SLR" => [
+        "img" => "img/projects/solarcoin.png",
+        "projectid" => "SolarCoin",
+        "collected" => "",
+        "status" => $verifying,
+        "description" => "1 SLR = 1MWh of Reward for Global solar energy production for the next 40 Yrs."
     ],
 
     "SNT" => [
