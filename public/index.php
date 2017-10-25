@@ -48,7 +48,7 @@ $satoshiPrice = $btcPrice / 100000000;
    NOTICE: The order of which they are displayed  equeals the order of the tickers given here
 */
 
-$tickers = array("ANT", "CFI", "DAP", "DNT", "DNA", "RSC", "EXP/LAB", "GAT", "HSR", "PREB", "ICN", "IND", "LKK", "ART", "MCI", "SAN", "VIC");
+$tickers = array("ANT", "AVT", "CFI", "DAP", "DNT", "DNA", "RSC", "EXP/LAB", "GAT", "HLN", "HSR", "PREB", "ICN", "IND", "LLA", "LKK", "ART", "MCI", "SAN", "VIC");
 
 /* get balances */
 
@@ -286,8 +286,8 @@ $projectData = [
     "DNA" => [
         "img" => "img/projects/encrypgen.png",
         "projectid" => "Encrypgen",
-        "collected" => "",
-        "status" => $verifying,
+        "collected" => "Ƀ166 and Ξ3314",
+        "status" => $certified,
         "description" => "Enchanced security for safe cloud storage and sharing of genomic data."
     ],
 
@@ -313,6 +313,14 @@ $projectData = [
         "collected" => "",
         "status" => $preico,
         "description" => "Global distributed shopping platform."
+    ],
+
+    "HLN" => [
+        "img" => "img/projects/hellenium.png",
+        "projectid" => "Hellenium",
+        "collected" => "",
+        "status" => $pre-ico,
+        "description" => "AI-powered automations as a service. The Amazon equivalent for services."
     ],
 
     "HSR" => [
@@ -343,9 +351,17 @@ $projectData = [
         "img" => "img/projects/indorse.png",
         "projectid" => "Indorse",
         "collected" => 'Ξ27,422',
-        "status" => $verifying,
+        "status" => $certified,
         "description" => "Decentralised professional networking platform."
     ],
+
+    "LLA" => [
+            "img" => "img/projects/lalena.png",
+            "projectid" => "Lalena",
+            "collected" => "",
+            "status" => $pre-ico,
+            "description" => "Philanthropic futures and speculation."
+        ],
 
     "LKK" => [
         "img" => "img/projects/lykke.png",
@@ -359,7 +375,7 @@ $projectData = [
         "img" => "img/projects/maecenas.png",
         "projectid" => "Maecenas",
         "collected" => "Ξ48,555",
-        "status" => $verifying,
+        "status" => $certified,
         "description" => "Decentralized art investment platform — where anyone can own a piece of a Picasso."
     ],
 
