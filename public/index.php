@@ -319,7 +319,7 @@ $projectData = [
         "img" => "img/projects/hellenium.png",
         "projectid" => "Hellenium",
         "collected" => "",
-        "status" => $pre-ico,
+        "status" => $preico,
         "description" => "AI-powered automations as a service. The Amazon equivalent for services."
     ],
 

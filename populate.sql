@@ -2,7 +2,7 @@
 INSERT INTO project (ticker, name, coinmarketcap_id) VALUES
   ('ANT', 'Aragon', 'aragon'),
   /* ('', 'Attores'), */
-  ('AVT', 'Aventus', null),
+  ('AVT', 'Aventus', 'aventus'),
   ('CFI', 'Cofound.it', 'cofound-it'),
   ('DAP', 'Dappbase', null),
   ('DNT', 'district0x', 'district0x'),
