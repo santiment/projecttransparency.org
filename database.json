@@ -1,0 +1,30 @@
+{
+  "dev": {
+    "driver": "pg",
+    "user": "sanbase",
+    "password": "sanbase",
+    "host": {"ENV":"DEVBOX_IP"},
+    "port": 5432,
+    "database": "postgres",
+    "schema": "sanbase"
+  },
+  "tunnel": {
+    "driver": "pg",
+    "user": {"ENV": "SANBASE_PGUSER"},
+    "password": {"ENV": "SANBASE_PGPASSWORD"},
+    "host": "localhost",
+    "port": {"ENV": "TUNNEL_PGPORT"},
+    "database": {"ENV": "SANBASE_PGDATABASE"},
+    "schema": "sanbase"
+  },
+
+  "prod": {
+    "driver": "pg",
+    "user": {"ENV": "SANBASE_PGUSER"},
+    "password": {"ENV": "SANBASE_PGPASSWORD"},
+    "host": {"ENV": "SANBASE_PGHOST"},
+    "port": {"ENV": "SANBASE_PGPORT"},
+    "database": {"ENV": "SANBASE_PGDATABASE"},
+    "schema": "sanbase"
+  }
+}
