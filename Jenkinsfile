@@ -8,6 +8,7 @@ podTemplate(label: 'projecttranparency-builder', containers: [
       container('docker') {
         def scmVars = checkout scm
         // TODO: Add tests
+        sh "true"
 
         if (env.BRANCH_NAME == "master") {
           withCredentials([
