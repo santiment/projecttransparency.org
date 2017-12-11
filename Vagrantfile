@@ -82,6 +82,8 @@ Vagrant.configure("2") do |config|
     cp /vagrant/vagrant-provision.nix /etc/nixos
     nixos-rebuild switch -Q
     nix-collect-garbage -d
+    cd /vagrant
+    composer install
   SHELL
 
 end
