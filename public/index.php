@@ -48,7 +48,8 @@ $satoshiPrice = $btcPrice / 100000000;
    NOTICE: The order of which they are displayed  equeals the order of the tickers given here
 */
 
-$tickers = array("ANT", "AVT", "CORC", "CFI", "DAP", "DNT", "DNA", "RSC", "EXP/LAB", "GAT", "HLN", "HSR", "PREB", "ICN", "IND", "LLA", "LKK", "ART", "MCI", "SAN", "SLR", "VIC");
+$tickers = array("ANT", "AVT", "CORC", "CFI", "DAP", "DNT", "DNA", "RSC", "EXP/LAB", "GAT", "HLN", "HSR",
+"ICNQ", "ICN", "IND", "LLA", "LKK", "ART", "MCI", "SAN", "SLR", "VIC");
 
 /* get balances */
 
@@ -235,10 +236,17 @@ $preico = '<div class="rating preico"><img src="img/preico.png" />Pre-ICO</div>'
 
 $projectData = [];
 $projectData = [
+    "ADX" => [
+        "img" => "img/projects/adex.png",
+        "projectid" => "AdEx Network",
+        "collected" => "Ξ40,008",
+        "status" => $certified,
+        "description" => "A decentralized advertising network on top of Ethereum smart contracts."
+    ],
     "ANT" => [
         "img" => "img/projects/aragon.png",
         "projectid" => "Aragon",
-        "collected" => "Ξ275,000.0",
+        "collected" => "Ξ275,000",
         "status" => $certified,
         "description" => "Manage entire organisations using the blockchain."
     ],
@@ -254,8 +262,8 @@ $projectData = [
     "AVT" => [
         "img" => "img/projects/aventus.png",
         "projectid" => "Aventus",
-        "collected" => "",
-        "status" => $verifying,
+        "collected" => "Ξ60,000",
+        "status" => $certified,
         "description" => "Aventus is creating a fair, secure, and transparent protocol for ticket exchange that solves problems the biggest problems in the industry."
     ],
 
@@ -267,13 +275,29 @@ $projectData = [
         "description" => "A service, a product and a marketplace all around wine and spirits. Traceability and counterfeit control."
     ],
 
+    "CLICK" => [
+        "img" => "img/projects/clickle.png",
+        "projectid" => "Clickle",
+        "collected" => "",
+        "status" => $verifying,
+        "description" => "Clickle, the fastes way to organize - Everything with just one CLICK."
+    ],
+
     "CFI" => [
         "img" => "img/projects/cofoundit.png",
         "projectid" => "Cofound.it",
         "collected" => "Ξ56,565",
-        "status" => $verifying,
+        "status" => $certified,
         "description" => "Distributed global platform that connects exceptional startups, experts and investors worldwide."
     ],
+
+    "C20" => [
+            "img" => "img/projects/crypto20.png",
+            "projectid" => "Crypto20",
+            "collected" => "",
+            "status" => $preico,
+            "description" => "A completely open and autonomous Crypto Index fund, fully transparent and on the blockchain."
+        ],
 
     "DAP" => [
         "img" => "img/projects/dappbase.png",
@@ -283,10 +307,18 @@ $projectData = [
         "description" => "Powerful and accessible tools for decentralized app development."
     ],
 
+    "DGD" => [
+        "img" => "img/projects/digixdao.png",
+        "projectid" => "DigixDAO",
+        "collected" => "Ξ462,719",
+        "status" => $certified,
+        "description" => "DigixDAO is a governance platform to help spur the DGX (Digital Gold token) ecosystem created by Digix."
+    ],
+
     "DNT" => [
         "img" => "img/projects/district0x.png",
         "projectid" => "district0x",
-        "collected" => "Ξ43,170.0",
+        "collected" => "Ξ43,170",
         "status" => $certified,
         "description" => "A network of decentralized marketplaces and communities."
     ],
@@ -315,12 +347,28 @@ $projectData = [
             "description" => "Expanse is a dAapp development organization that also has its own Ethereum compatible blockchain. Our latest project is Tokenlab."
         ],
 
+    "XSB" => [
+            "img" => "img/projects/extreme_sportsbook.png",
+            "projectid" => "Extreme Sportsbook",
+            "collected" => "",
+            "status" => $preico,
+            "description" => "Extreme Sportsbook - A Blockchain based Staking and Masternode coin to facilitate a decentralized, anonymous and autonomous sportsbook."
+        ],
+
     "GAT" => [
         "img" => "img/projects/gatcoin.png",
         "projectid" => "Gatcoin",
         "collected" => "",
         "status" => $preico,
         "description" => "Global distributed shopping platform."
+    ],
+
+    "GVC" => [
+        "img" => "img/projects/gravelcoin.png",
+        "projectid" => "Gravel Coin",
+        "collected" => "",
+        "status" => $preico,
+        "description" => "Global gravel production. Stone mining and stone crushing starting in Brazil and Guinea."
     ],
 
     "HLN" => [
@@ -339,7 +387,7 @@ $projectData = [
         "description" => "A decentralized and open-source cross-platform cryptocurrency."
     ],
 
-    "PREB" => [
+    "ICNQ" => [
         "img" => "img/projects/iconiqlab.png",
         "projectid" => "Iconiq Lab",
         "collected" => "",
@@ -364,12 +412,20 @@ $projectData = [
     ],
 
     "LLA" => [
-            "img" => "img/projects/lalena.png",
-            "projectid" => "Lalena",
-            "collected" => "",
-            "status" => $preico,
-            "description" => "Philanthropic futures and speculation."
-        ],
+        "img" => "img/projects/lalena.png",
+        "projectid" => "Lalena",
+        "collected" => "",
+        "status" => $preico,
+        "description" => "Philanthropic futures and speculation."
+    ],
+
+    "PHT" => [
+        "img" => "img/projects/lightstreams_network.png",
+        "projectid" => "Lightstreams Network",
+        "collected" => "",
+        "status" => $preico,
+        "description" => "Peer-to-peer digital publishing network. We enable artists to directly sell their content to fans."
+    ],
 
     "LKK" => [
         "img" => "img/projects/lykke.png",
@@ -387,6 +443,22 @@ $projectData = [
         "description" => "Decentralized art investment platform — where anyone can own a piece of a Picasso."
     ],
 
+    "MTL" => [
+        "img" => "img/projects/metal.png",
+        "projectid" => "Metal",
+        "collected" => "$9,900,000",
+        "status" => $certified,
+        "description" => "Metal Pay is a blockchain-based payment processing platform, which intends to introduce cryptocurrency to the mass-market."
+    ],
+
+    "MISC" => [
+        "img" => "img/projects/misscoin.png",
+        "projectid" => "Misscoin",
+        "collected" => "",
+        "status" => $preico,
+        "description" => "First world beauty contest based on blockchain."
+    ],
+
     "MCI" => [
         "img" => "img/projects/musiconomi.png",
         "projectid" => "Musiconomi",
@@ -395,10 +467,18 @@ $projectData = [
         "description" => "A global music economy that works for everyone."
     ],
 
+    "OHNI" => [
+        "img" => "img/projects/ohni.png",
+        "projectid" => "Ohni",
+        "collected" => "",
+        "status" => $verifying,
+        "description" => "A financial token for identity of the consumer voting network"
+    ],
+
     "SAN" => [
         "img" => "img/projects/santiment.png",
         "projectid" => "Santiment",
-        "collected" => "Ξ45,000.0",
+        "collected" => "Ξ45,000",
         "status" => $certified,
         "description" => "Datafeeds and transparency platform for the crypto-markets."
     ],
@@ -411,10 +491,18 @@ $projectData = [
         "description" => "1 SLR = 1MWh of Reward for Global solar energy production for the next 40 Yrs."
     ],
 
+    "SNM" => [
+            "img" => "img/projects/sonm.png",
+            "projectid" => "SONM",
+            "collected" => "Ξ117,337",
+            "status" => $certified,
+            "description" => "SONM is a decentralized worldwide fog supercomputer for general purpose computing from site hosting to scientific calculations."
+        ],
+
     "SNT" => [
         "img" => "img/projects/status.png",
         "projectid" => "Status.im",
-        "collected" => "Ξ299343.1",
+        "collected" => "Ξ299,343",
         "status" => $certified,
         "description" => "Open source mobile client built entirely on Ethereum technologies."
     ],
@@ -425,8 +513,16 @@ $projectData = [
         "collected" => "",
         "status" => $preico,
         "description" => "Investment firm that specializes in real estate and angel investing."
-    ]
-   
+    ],
+
+     "WRL" => [
+         "img" => "img/projects/wireline.png",
+         "projectid" => "Wireline",
+         "collected" => "",
+         "status" => $preico,
+         "description" => "The marketplace for cloud applications. Wireline is the open app store for web and business applications."
+     ]
+
 ];
 
 
