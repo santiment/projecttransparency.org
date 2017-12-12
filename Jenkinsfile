@@ -1,4 +1,4 @@
-podTemplate(label: 'projecttranparency-builder', containers: [
+podTemplate(label: 'projecttransparency-builder', containers: [
   containerTemplate(name: 'docker', image: 'docker', ttyEnabled: true, command: 'cat', envVars: [
     envVar(key: 'DOCKER_HOST', value: 'tcp://docker-host-docker-host:2375')
   ])
