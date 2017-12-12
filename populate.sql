@@ -11,7 +11,7 @@ INSERT INTO project (ticker, name, coinmarketcap_id) VALUES
   ('DAP', 'Dappbase', null),
   ('DGD', 'DigixDAO', 'digixdao'),
   ('DNT', 'district0x', 'district0x'),
-  ('DNA', 'Encrypgen', null),
+  ('DNA', 'Encrypgen', 'encrypgen'),
   ('RSC', 'Etherisc', null),
   ('EXP/LAB', 'Expanse/Tokenlab', null),
   ('XSB', 'Extreme Sportsbook', null),
