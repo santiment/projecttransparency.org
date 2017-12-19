@@ -12,26 +12,47 @@ try {
     error_log("Caught exception:" . ($e->getMessage()));
 }
 
-/* Connect to database */
-$servername = getenv("DB_SERVER");
-$database = getenv("DB_DATABASE");
-$username = getenv("DB_USER");
-$password = getenv("DB_PASSWORD");
+$sanbaseGraphQlUrl = getenv("SANBASE_GRAPHQL");
+$sanbaseClient = Softonic\GraphQL\ClientBuilder::build($sanbaseGraphQlUrl);
 
-// error_log("Connecting:".$servername.$database.$username.$password);
-    
+$query = <<<'QUERY'
+{
+    allProjects(onlyProjectTransparency:true) {
+        name,
+        ticker,
+        logoUrl,
+        btcBalance,
+        ethBalance,
+        projectTransparencyStatus,
+        projectTransparencyDescription,
+        fundsRaisedIcos {
+            currencyCode,
+            amount
+        },
+        latestCoinmarketcapData {
+            marketCapUsd
+        }
+    }
+}
+QUERY;
+// This is needed because of a bug in the client library
+$variables = [
+    "dummy" => "dummy"
+];
 
-// Create connection
-$conn_string = "host=".$servername." dbname=". $database ." user=".$username." password=".$password;
-$conn = pg_connect($conn_string);
-if (!$conn) {
-    $error = error_get_last();
-    throw new Exception("Connection failed: " . $error["message"]);
+try {
+    $resp = $sanbaseClient->query($query, $variables);
+
+    $projectsData = $resp->getData()['allProjects'];
+    // var_dump($projectsData);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e, "\n";
 }
 
 /* get ETH PRICE */
 setlocale(LC_MONETARY, 'en_US');
 
+// TODO: get eth & btc price from sanbase as well
 $ethPrice = 0;
 $priceResult = json_decode(file_get_contents('https://api.coinbase.com/v2/prices/ETH-USD/sell'),true);
 $ethPrice = $priceResult['data']['amount'];
@@ -43,183 +64,67 @@ $btcPrice = $btcPriceResult['data']['amount'];
 $satoshiPrice = $btcPrice / 100000000;
 
 
-
-/* Projects to be displayed 
-   NOTICE: The order of which they are displayed  equeals the order of the tickers given here
-*/
-
-$tickers = array("ANT", "AVT", "CORC", "CFI", "DAP", "DNT", "DNA", "RSC", "EXP/LAB", "GAT", "HLN", "HSR",
-"ICNQ", "ICN", "IND", "LLA", "LKK", "ART", "MCI", "SAN", "SLR", "VIC");
-
 /* get balances */
 
-function getWallets($ticker_list) {
-    $wallets = [];
-
-    global $conn;
-    global $ethPrice;
-    global $satoshiPrice;
-
-    
-    $quoted = array_map( function ($token) { return "'".$token."'"; }, $ticker_list );
-    $sql_tickers = join(", ", $quoted);
-
-    /* Get current wallet data */
-    $sql = <<<SQL
-
-SELECT
-  ticker,
-  eth_balance,
-  satoshi_balance
-
-FROM 
-  (
-    SELECT
-      ticker,
-      SUM(latest_eth_wallet_data.balance) AS eth_balance
-    FROM
-      project,
-      project_eth_address,
-      latest_eth_wallet_data
-    WHERE
-      project.id = project_eth_address.project_id AND
-      project_eth_address.address = latest_eth_wallet_data.address
-
-    GROUP BY
-      ticker
-  ) as eth
-
-  NATURAL FULL OUTER JOIN
-
-  (
-    SELECT
-      ticker,
-      SUM(latest_btc_wallet_data.satoshi_balance) AS satoshi_balance
-    FROM
-      project,
-      project_btc_address,
-      latest_btc_wallet_data
-    WHERE
-      project.id = project_btc_address.project_id AND
-      project_btc_address.address = latest_btc_wallet_data.address
-
-    GROUP BY
-      ticker
-  ) as btc;
-
-SQL;
-
-//     $sql = <<<SQL
-// SELECT
-//   ticker,
-//   SUM(latest_eth_wallet_data.balance) AS eth_balance,
-//   SUM(latest_btc_wallet_data.satoshi_balance) AS satoshi_balance,
-
-// FROM
-//   project,
-//   project_eth_address,
-//   latest_eth_wallet_data,
-//   latest_btc_wallet_data
-
-// WHERE
-//   project.id = project_eth_address.project_id AND
-//   project_eth_address.address = latest_eth_wallet_data.address
-
-// GROUP BY
-//   ticker
-
-// SQL;
-
-    $result = pg_query($conn, $sql);
-
-    while ($row = pg_fetch_assoc($result)) {
-        $ticker = $row['ticker'];
-        $wallets[$ticker]['eth_balance'] = $row['eth_balance'];
-        $satoshi_balance = $row['satoshi_balance'];
-        $wallets[$ticker]['btc_balance'] = $satoshi_balance / 100000000;
-        $wallets[$ticker]['usd_balance'] = ($row['eth_balance'] * $ethPrice)
-                                         + ($satoshi_balance * $satoshiPrice);
+foreach($projectsData as $project)
+{
+    if(!is_null($project['btcBalance']) or !is_null($project['ethBalance']))
+    {
+        $usdBalance = 0;
+        if(!is_null($project['btcBalance']))
+        {
+            $project['btcBalance'] = floatval($project['btcBalance'])/100000000;
+            $usdBalance+=$project['btcBalance']*$btcPrice;
+        }
+        if(!is_null($project['ethBalance']))
+        {
+            $project['ethBalance'] = floatval($project['ethBalance']);
+            $usdBalance+=$project['ethBalance']*$ethPrice;
+        }
+        $project['usdBalance'] = $usdBalance;
     }
-
-    /* Get current market cap */
-
-    $sql = <<<QUERY
-
-SELECT
-  p.ticker as ticker,
-  c.id as id,
-  c.market_cap_usd as market_cap_usd
-FROM
-  project as p,
-  latest_coinmarketcap_data as c
-WHERE
-  p.coinmarketcap_id = c.id AND
-  p.ticker in ({$sql_tickers});
-
-QUERY;
-
-    //$sql = "SELECT * FROM cmm_data WHERE ticker in (".$sql_tickers.")";
-    //error_log($sql);
-    $result = pg_query($conn, $sql);
-
-    while ($row = pg_fetch_assoc($result)) {
-        //error_log($row['ticker'] . " ". $row['id']);
-        $ticker = $row['ticker'];
-        $wallets[$ticker]['market_cap'] = $row['market_cap_usd'];
+    else
+    {
+        $project['usdBalance'] = NULL;
     }
-
-    return $wallets;
-
 }
+unset($project);
 
-$walletData = getWallets($tickers);
-
-$totalMarketCap = array_reduce( $walletData, function ($aggregate, $wallet) {
-    if ( array_key_exists('market_cap', $wallet)) {
-        $aggregate += $wallet['market_cap'];
+$totalMarketCap = array_reduce( $projectsData, function ($aggregate, $project) {
+    if ( !is_null($project["latestCoinmarketcapData"])) {
+        $aggregate += floatval($project["latestCoinmarketcapData"]["marketCapUsd"]);
     };
 
     return $aggregate;
 }, 0);
 
 
-function balanceStr($ticker) {
-    global $walletData;
-
-    $result = "";
-
-    if( !array_key_exists($ticker, $walletData )) {
-        return "Verifying";
-    }
-    $wallet = $walletData[$ticker];
-
+function balanceStr($project) {
 
     //Write USD balance
-    if ( !array_key_exists('usd_balance', $wallet) ) {
+    if ( is_null($project["usdBalance"]) ) {
         return "Verifying";
     }
 
-    $result = $result . "$" . number_format( $wallet['usd_balance'], 0);
+    $result = $result . "$" . number_format( $project['usdBalance'], 0);
 
     //Write BTC balance (if any)
-    if (array_key_exists('btc_balance', $wallet) and $wallet['btc_balance'] > 0.049) {
-        $result = $result . "<br/>Ƀ" . number_format( $walletData[$ticker]['btc_balance'], 1);
+    if (!is_null($project["btcBalance"]) and $project["btcBalance"] > 0.049) {
+        $result = $result . "<br/>Ƀ" . number_format( $project["btcBalance"], 1);
     }
 
     //Write ETH balance (if any)
-    if (array_key_exists('eth_balance', $wallet) and ($walletData[$ticker]['eth_balance']> 0.049)) {
-        $result = $result . "<br/>Ξ" . number_format( $walletData[$ticker]['eth_balance'], 1);
+    if (!is_null($project["ethBalance"]) and $project["ethBalance"] > 0.049) {
+        $result = $result . "<br/>Ξ" . number_format( $project["ethBalance"], 1);
     }
 
     return $result;
 }
 
-function marketCapStr($ticker) {
-    global $walletData;
+function marketCapStr($project) {
 
-    if (array_key_exists( $ticker, $walletData) and
-        array_key_exists( 'market_cap', $walletData[$ticker])) {
-        return "$". number_format( $walletData[$ticker]['market_cap'], 0);
+    if (!is_null($project["latestCoinmarketcapData"])) {
+        return "$". number_format( floatval($project["latestCoinmarketcapData"]["marketCapUsd"]), 0);
     }
     else
     {
@@ -234,326 +139,78 @@ $certified = '<div class="rating certified"><img src="img/certified.png" />Certi
 $verifying = '<div class="rating verifying"><img src="img/verifying.png" />Verifying</div>';
 $preico = '<div class="rating preico"><img src="img/preico.png" />Pre-ICO</div>';
 
-$projectData = [];
-$projectData = [
-    "ADX" => [
-        "img" => "img/projects/adex.png",
-        "projectid" => "AdEx Network",
-        "collected" => "Ξ40,008",
-        "status" => $certified,
-        "description" => "A decentralized advertising network on top of Ethereum smart contracts."
-    ],
-    "ANT" => [
-        "img" => "img/projects/aragon.png",
-        "projectid" => "Aragon",
-        "collected" => "Ξ275,000",
-        "status" => $certified,
-        "description" => "Manage entire organisations using the blockchain."
-    ],
+function statusStr($project) {
 
-    "PREA" => [
-        "img" => "img/projects/attores.png",
-        "projectid" => "Attores",
-        "collected" => "",
-        "status" => $verifying,
-        "description" => "Blockchain applications & smart contracts (digital signatures and certificates)."
-    ],
+    if($project["projectTransparencyStatus"] == "Certified") {
+        return '<div class="rating certified"><img src="img/certified.png" />Certified</div>';
+    } else if($project["projectTransparencyStatus"] == "Verifying") {
+        return '<div class="rating verifying"><img src="img/verifying.png" />Verifying</div>';
+    } else {
+        return '<div class="rating preico"><img src="img/preico.png" />'. $project["projectTransparencyStatus"] .'</div>';
+    }
+}
 
-    "AVT" => [
-        "img" => "img/projects/aventus.png",
-        "projectid" => "Aventus",
-        "collected" => "Ξ60,000",
-        "status" => $certified,
-        "description" => "Aventus is creating a fair, secure, and transparent protocol for ticket exchange that solves problems the biggest problems in the industry."
-    ],
+function collectedStr($project) {
 
-    "CORC" => [
-        "img" => "img/projects/cellrlab.png",
-        "projectid" => "CellR Lab",
-        "collected" => "",
-        "status" => $preico,
-        "description" => "A service, a product and a marketplace all around wine and spirits. Traceability and counterfeit control."
-    ],
+    $count = count($project['fundsRaisedIcos']);
+    $text = "";
+    for ($i = 0; $i < $count; $i++) {
+        $currencyAmount = $project['fundsRaisedIcos'][$i];
 
-    "CLICK" => [
-        "img" => "img/projects/clickle.png",
-        "projectid" => "Clickle",
-        "collected" => "",
-        "status" => $verifying,
-        "description" => "Clickle, the fastes way to organize - Everything with just one CLICK."
-    ],
+        if(!is_null($currencyAmount['currencyCode']) and !is_null($currencyAmount['amount'])) {
+            if($i > 0) {
+                if($i < $count - 1) {
+                    $text = $text . ", ";
+                } else {
+                    $text = $text . " and ";
+                }
+            }
 
-    "CFI" => [
-        "img" => "img/projects/cofoundit.png",
-        "projectid" => "Cofound.it",
-        "collected" => "Ξ56,565",
-        "status" => $certified,
-        "description" => "Distributed global platform that connects exceptional startups, experts and investors worldwide."
-    ],
+            if($currencyAmount['currencyCode'] == "ETH") {
+                $text = $text . "Ξ";
+            } else if($currencyAmount['currencyCode'] == "BTC") {
+                $text = $text . "Ƀ";
+            } else if($currencyAmount['currencyCode'] == "USD") {
+                $text = $text . "$";
+            } else {
+                $text = $text . $currencyAmount['currencyCode'] . " ";
+            }
 
-    "C20" => [
-            "img" => "img/projects/crypto20.png",
-            "projectid" => "Crypto20",
-            "collected" => "",
-            "status" => $preico,
-            "description" => "A completely open and autonomous Crypto Index fund, fully transparent and on the blockchain."
-        ],
+            $amount = floatval($currencyAmount['amount']);
+            $text = $text . number_format( $amount, 0);
+        }
+    }
 
-    "DAP" => [
-        "img" => "img/projects/dappbase.png",
-        "projectid" => "Dappbase",
-        "collected" => "",
-        "status" => $preico,
-        "description" => "Powerful and accessible tools for decentralized app development."
-    ],
+    return $text;
+}
 
-    "DGD" => [
-        "img" => "img/projects/digixdao.png",
-        "projectid" => "DigixDAO",
-        "collected" => "Ξ462,719",
-        "status" => $certified,
-        "description" => "DigixDAO is a governance platform to help spur the DGX (Digital Gold token) ecosystem created by Digix."
-    ],
+function displayProject($project) {
 
-    "DNT" => [
-        "img" => "img/projects/district0x.png",
-        "projectid" => "district0x",
-        "collected" => "Ξ43,170",
-        "status" => $certified,
-        "description" => "A network of decentralized marketplaces and communities."
-    ],
-
-    "DNA" => [
-        "img" => "img/projects/encrypgen.png",
-        "projectid" => "Encrypgen",
-        "collected" => "Ƀ166 and Ξ3314",
-        "status" => $certified,
-        "description" => "Enchanced security for safe cloud storage and sharing of genomic data."
-    ],
-
-    "RSC" => [
-        "img" => "img/projects/etherisc.png",
-        "projectid" => "Etherisc",
-        "collected" => "Ξ100.369",
-        "status" => $verifying,
-        "description" => "A decentralized insurance and reinsurance marketplace."
-    ],
-
-    "EXP/LAB" => [
-            "img" => "img/projects/expanse.png",
-            "projectid" => "Expanse/Tokenlab",
-            "collected" => "",
-            "status" => $preico,
-            "description" => "Expanse is a dAapp development organization that also has its own Ethereum compatible blockchain. Our latest project is Tokenlab."
-        ],
-
-    "XSB" => [
-            "img" => "img/projects/extreme_sportsbook.png",
-            "projectid" => "Extreme Sportsbook",
-            "collected" => "",
-            "status" => $preico,
-            "description" => "Extreme Sportsbook - A Blockchain based Staking and Masternode coin to facilitate a decentralized, anonymous and autonomous sportsbook."
-        ],
-
-    "GAT" => [
-        "img" => "img/projects/gatcoin.png",
-        "projectid" => "Gatcoin",
-        "collected" => "",
-        "status" => $preico,
-        "description" => "Global distributed shopping platform."
-    ],
-
-    "GVC" => [
-        "img" => "img/projects/gravelcoin.png",
-        "projectid" => "Gravel Coin",
-        "collected" => "",
-        "status" => $preico,
-        "description" => "Global gravel production. Stone mining and stone crushing starting in Brazil and Guinea."
-    ],
-
-    "HLN" => [
-        "img" => "img/projects/hellenium.png",
-        "projectid" => "Hellenium",
-        "collected" => "",
-        "status" => $preico,
-        "description" => "AI-powered automations as a service. The Amazon equivalent for services."
-    ],
-
-    "HSR" => [
-        "img" => "img/projects/hcash.png",
-        "projectid" => "Hshare",
-        "collected" => "Ƀ21,000",
-        "status" => $verifying,
-        "description" => "A decentralized and open-source cross-platform cryptocurrency."
-    ],
-
-    "ICNQ" => [
-        "img" => "img/projects/iconiqlab.png",
-        "projectid" => "Iconiq Lab",
-        "collected" => "",
-        "status" => $preico,
-        "description" => "Seed funding wallet and accelerator that helps crypto, blockchain and technology startups run their own ICOs."
-    ],
-
-    "ICN" => [
-        "img" => "img/projects/iconomi.png",
-        "projectid" => "Iconomi",
-        "collected" => '$10,395,054',
-        "status" => $certified,
-        "description" => "Investment fund management platform for the decentralized economy."
-    ],
-
-    "IND" => [
-        "img" => "img/projects/indorse.png",
-        "projectid" => "Indorse",
-        "collected" => 'Ξ27,422',
-        "status" => $certified,
-        "description" => "Decentralised professional networking platform."
-    ],
-
-    "LLA" => [
-        "img" => "img/projects/lalena.png",
-        "projectid" => "Lalena",
-        "collected" => "",
-        "status" => $preico,
-        "description" => "Philanthropic futures and speculation."
-    ],
-
-    "PHT" => [
-        "img" => "img/projects/lightstreams_network.png",
-        "projectid" => "Lightstreams Network",
-        "collected" => "",
-        "status" => $preico,
-        "description" => "Peer-to-peer digital publishing network. We enable artists to directly sell their content to fans."
-    ],
-
-    "LKK" => [
-        "img" => "img/projects/lykke.png",
-        "projectid" => "Lykke",
-        "collected" => "Ξ264,399",
-        "status" => $verifying,
-        "description" => "Blockchain-based marketplace where financial instruments can be traded and settled P2P."
-    ],
-
-    "ART" => [
-        "img" => "img/projects/maecenas.png",
-        "projectid" => "Maecenas",
-        "collected" => "Ξ48,555",
-        "status" => $certified,
-        "description" => "Decentralized art investment platform — where anyone can own a piece of a Picasso."
-    ],
-
-    "MTL" => [
-        "img" => "img/projects/metal.png",
-        "projectid" => "Metal",
-        "collected" => "$9,900,000",
-        "status" => $certified,
-        "description" => "Metal Pay is a blockchain-based payment processing platform, which intends to introduce cryptocurrency to the mass-market."
-    ],
-
-    "MISC" => [
-        "img" => "img/projects/misscoin.png",
-        "projectid" => "Misscoin",
-        "collected" => "",
-        "status" => $preico,
-        "description" => "First world beauty contest based on blockchain."
-    ],
-
-    "MCI" => [
-        "img" => "img/projects/musiconomi.png",
-        "projectid" => "Musiconomi",
-        "collected" => "Ξ17,648",
-        "status" => $verifying,
-        "description" => "A global music economy that works for everyone."
-    ],
-
-    "OHNI" => [
-        "img" => "img/projects/ohni.png",
-        "projectid" => "Ohni",
-        "collected" => "",
-        "status" => $verifying,
-        "description" => "A financial token for identity of the consumer voting network"
-    ],
-
-    "SAN" => [
-        "img" => "img/projects/santiment.png",
-        "projectid" => "Santiment",
-        "collected" => "Ξ45,000",
-        "status" => $certified,
-        "description" => "Datafeeds and transparency platform for the crypto-markets."
-    ],
-
-    "SLR" => [
-        "img" => "img/projects/solarcoin.png",
-        "projectid" => "SolarCoin",
-        "collected" => "",
-        "status" => $verifying,
-        "description" => "1 SLR = 1MWh of Reward for Global solar energy production for the next 40 Yrs."
-    ],
-
-    "SNM" => [
-            "img" => "img/projects/sonm.png",
-            "projectid" => "SONM",
-            "collected" => "Ξ117,337",
-            "status" => $certified,
-            "description" => "SONM is a decentralized worldwide fog supercomputer for general purpose computing from site hosting to scientific calculations."
-        ],
-
-    "SNT" => [
-        "img" => "img/projects/status.png",
-        "projectid" => "Status.im",
-        "collected" => "Ξ299,343",
-        "status" => $certified,
-        "description" => "Open source mobile client built entirely on Ethereum technologies."
-    ],
-
-    "VIC" => [
-        "img" => "img/projects/virgilcapital.png",
-        "projectid" => "Virgil Capital",
-        "collected" => "",
-        "status" => $preico,
-        "description" => "Investment firm that specializes in real estate and angel investing."
-    ],
-
-     "WRL" => [
-         "img" => "img/projects/wireline.png",
-         "projectid" => "Wireline",
-         "collected" => "",
-         "status" => $preico,
-         "description" => "The marketplace for cloud applications. Wireline is the open app store for web and business applications."
-     ]
-
-];
-
-
-function displayProject($ticker) {
-    
-    global $projectData;
-
-    $data = $projectData[$ticker];
-    $marketCap = marketCapStr($ticker);
-    $balance = balanceStr($ticker);
+    $marketCap = marketCapStr($project);
+    $balance = balanceStr($project);
+    $status = statusStr($project);
+    $collected = collectedStr($project);
 
     return <<<PROJECT
 <div class="project">
   <div class="info">
-    <div class="projectid"><img src="{$data['img']}" />{$data['projectid']}</div>
+    <div class="projectid"><img src="img/projects/{$project['logoUrl']}" />{$project['name']}</div>
     <div class="numbers">
       <div class="marketcap"><label>Market Cap</label>{$marketCap}</div>
-      <div class="collected"><label>Collected</label>{$data['collected']}</div>
+      <div class="collected"><label>Collected</label>{$collected}</div>
       <div class="balance"><label>Balance</label>{$balance}</div>
     </div>
-    {$data['status']}
+    {$status}
   </div>
   <div class="description">
-    <p>{$data['description']}</p>
+    <p>{$project['projectTransparencyDescription']}</p>
   </div>
 </div>  
 PROJECT;
     
 }
 
-$projectView = join("\n",array_map( "displayProject", $tickers));
+$projectView = join("\n",array_map( "displayProject", $projectsData));
 ?>
 
 <!DOCTYPE html>
