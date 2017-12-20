@@ -3,6 +3,6 @@
   "version": "0.1.0",
     "require": {
         "vlucas/phpdotenv": "^2.4",
-        "softonic/graphql-client": "^1.0"
+        "euautomation/graphql-client": "^0.2"
     }
 }

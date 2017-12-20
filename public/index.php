@@ -12,8 +12,11 @@ try {
     error_log("Caught exception:" . ($e->getMessage()));
 }
 
-$sanbaseGraphQlUrl = getenv("SANBASE_GRAPHQL");
-$sanbaseClient = Softonic\GraphQL\ClientBuilder::build($sanbaseGraphQlUrl);
+$sanbaseGraphQlUrl = getenv("SANBASE_GRAPHQL_URL");
+$sanbaseGraphQlUsername = getenv("SANBASE_GRAPHQL_USERNAME");
+$sanbaseGraphQlPassword = getenv("SANBASE_GRAPHQL_PASSWORD");
+
+$sanbaseClient = new EUAutomation\GraphQL\Client($sanbaseGraphQlUrl);
 
 $query = <<<'QUERY'
 {
@@ -35,15 +38,15 @@ $query = <<<'QUERY'
     }
 }
 QUERY;
-// This is needed because of a bug in the client library
-$variables = [
-    "dummy" => "dummy"
+
+$headers = [
+    "authorization" => "Basic ".base64_encode($sanbaseGraphQlUsername . ":" . $sanbaseGraphQlPassword)
 ];
 
 try {
-    $resp = $sanbaseClient->query($query, $variables);
+    $resp = $sanbaseClient->response($query, null, $headers);
 
-    $projectsData = $resp->getData()['allProjects'];
+    $projectsData = $resp->allProjects;
     // var_dump($projectsData);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e, "\n";
@@ -68,31 +71,31 @@ $satoshiPrice = $btcPrice / 100000000;
 
 foreach($projectsData as $project)
 {
-    if(!is_null($project['btcBalance']) or !is_null($project['ethBalance']))
+    if(!is_null($project->btcBalance) or !is_null($project->ethBalance))
     {
         $usdBalance = 0;
-        if(!is_null($project['btcBalance']))
+        if(!is_null($project->btcBalance))
         {
-            $project['btcBalance'] = floatval($project['btcBalance'])/100000000;
-            $usdBalance+=$project['btcBalance']*$btcPrice;
+            $project->btcBalance = floatval($project->btcBalance)/100000000;
+            $usdBalance+=$project->btcBalance*$btcPrice;
         }
-        if(!is_null($project['ethBalance']))
+        if(!is_null($project->ethBalance))
         {
-            $project['ethBalance'] = floatval($project['ethBalance']);
-            $usdBalance+=$project['ethBalance']*$ethPrice;
+            $project->ethBalance = floatval($project->ethBalance);
+            $usdBalance+=$project->ethBalance*$ethPrice;
         }
-        $project['usdBalance'] = $usdBalance;
+        $project->usdBalance = $usdBalance;
     }
     else
     {
-        $project['usdBalance'] = NULL;
+        $project->usdBalance = NULL;
     }
 }
 unset($project);
 
 $totalMarketCap = array_reduce( $projectsData, function ($aggregate, $project) {
-    if ( !is_null($project["latestCoinmarketcapData"])) {
-        $aggregate += floatval($project["latestCoinmarketcapData"]["marketCapUsd"]);
+    if ( !is_null($project->latestCoinmarketcapData)) {
+        $aggregate += floatval($project->latestCoinmarketcapData->marketCapUsd);
     };
 
     return $aggregate;
@@ -102,20 +105,20 @@ $totalMarketCap = array_reduce( $projectsData, function ($aggregate, $project) {
 function balanceStr($project) {
 
     //Write USD balance
-    if ( is_null($project["usdBalance"]) ) {
+    if ( is_null($project->usdBalance) ) {
         return "Verifying";
     }
 
-    $result = $result . "$" . number_format( $project['usdBalance'], 0);
+    $result = $result . "$" . number_format( $project->usdBalance, 0);
 
     //Write BTC balance (if any)
-    if (!is_null($project["btcBalance"]) and $project["btcBalance"] > 0.049) {
-        $result = $result . "<br/>Ƀ" . number_format( $project["btcBalance"], 1);
+    if (!is_null($project->btcBalance) and $project->btcBalance > 0.049) {
+        $result = $result . "<br/>Ƀ" . number_format( $project->btcBalance, 1);
     }
 
     //Write ETH balance (if any)
-    if (!is_null($project["ethBalance"]) and $project["ethBalance"] > 0.049) {
-        $result = $result . "<br/>Ξ" . number_format( $project["ethBalance"], 1);
+    if (!is_null($project->ethBalance) and $project->ethBalance > 0.049) {
+        $result = $result . "<br/>Ξ" . number_format( $project->ethBalance, 1);
     }
 
     return $result;
@@ -123,8 +126,8 @@ function balanceStr($project) {
 
 function marketCapStr($project) {
 
-    if (!is_null($project["latestCoinmarketcapData"])) {
-        return "$". number_format( floatval($project["latestCoinmarketcapData"]["marketCapUsd"]), 0);
+    if (!is_null($project->latestCoinmarketcapData)) {
+        return "$". number_format( floatval($project->latestCoinmarketcapData->marketCapUsd), 0);
     }
     else
     {
@@ -141,23 +144,23 @@ $preico = '<div class="rating preico"><img src="img/preico.png" />Pre-ICO</div>'
 
 function statusStr($project) {
 
-    if($project["projectTransparencyStatus"] == "Certified") {
+    if($project->projectTransparencyStatus == "Certified") {
         return '<div class="rating certified"><img src="img/certified.png" />Certified</div>';
-    } else if($project["projectTransparencyStatus"] == "Verifying") {
+    } else if($project->projectTransparencyStatus == "Verifying") {
         return '<div class="rating verifying"><img src="img/verifying.png" />Verifying</div>';
     } else {
-        return '<div class="rating preico"><img src="img/preico.png" />'. $project["projectTransparencyStatus"] .'</div>';
+        return '<div class="rating preico"><img src="img/preico.png" />'. $project->projectTransparencyStatus .'</div>';
     }
 }
 
 function collectedStr($project) {
 
-    $count = count($project['fundsRaisedIcos']);
+    $count = count($project->fundsRaisedIcos);
     $text = "";
     for ($i = 0; $i < $count; $i++) {
-        $currencyAmount = $project['fundsRaisedIcos'][$i];
+        $currencyAmount = $project->fundsRaisedIcos[$i];
 
-        if(!is_null($currencyAmount['currencyCode']) and !is_null($currencyAmount['amount'])) {
+        if(!is_null($currencyAmount->currencyCode) and !is_null($currencyAmount->amount)) {
             if($i > 0) {
                 if($i < $count - 1) {
                     $text = $text . ", ";
@@ -166,17 +169,17 @@ function collectedStr($project) {
                 }
             }
 
-            if($currencyAmount['currencyCode'] == "ETH") {
+            if($currencyAmount->currencyCode == "ETH") {
                 $text = $text . "Ξ";
-            } else if($currencyAmount['currencyCode'] == "BTC") {
+            } else if($currencyAmount->currencyCode == "BTC") {
                 $text = $text . "Ƀ";
-            } else if($currencyAmount['currencyCode'] == "USD") {
+            } else if($currencyAmount->currencyCode == "USD") {
                 $text = $text . "$";
             } else {
-                $text = $text . $currencyAmount['currencyCode'] . " ";
+                $text = $text . $currencyAmount->currencyCode . " ";
             }
 
-            $amount = floatval($currencyAmount['amount']);
+            $amount = floatval($currencyAmount->amount);
             $text = $text . number_format( $amount, 0);
         }
     }
@@ -194,7 +197,7 @@ function displayProject($project) {
     return <<<PROJECT
 <div class="project">
   <div class="info">
-    <div class="projectid"><img src="img/projects/{$project['logoUrl']}" />{$project['name']}</div>
+    <div class="projectid"><img src="img/projects/{$project->logoUrl}" />{$project->name}</div>
     <div class="numbers">
       <div class="marketcap"><label>Market Cap</label>{$marketCap}</div>
       <div class="collected"><label>Collected</label>{$collected}</div>
@@ -203,7 +206,7 @@ function displayProject($project) {
     {$status}
   </div>
   <div class="description">
-    <p>{$project['projectTransparencyDescription']}</p>
+    <p>{$project->projectTransparencyDescription}</p>
   </div>
 </div>  
 PROJECT;
