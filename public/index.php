@@ -26,14 +26,12 @@ $query = <<<'QUERY'
         logoUrl,
         btcBalance,
         ethBalance,
+        marketcapUsd,
         projectTransparencyStatus,
         projectTransparencyDescription,
         fundsRaisedIcos {
             currencyCode,
             amount
-        },
-        latestCoinmarketcapData {
-            marketCapUsd
         }
     }
 }
@@ -47,6 +45,7 @@ try {
     $resp = $sanbaseClient->response($query, null, $headers);
 
     $projectsData = $resp->allProjects;
+    // var_dump($resp);
     // var_dump($projectsData);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e, "\n";
@@ -94,8 +93,8 @@ foreach($projectsData as $project)
 unset($project);
 
 $totalMarketCap = array_reduce( $projectsData, function ($aggregate, $project) {
-    if ( !is_null($project->latestCoinmarketcapData)) {
-        $aggregate += floatval($project->latestCoinmarketcapData->marketCapUsd);
+    if ( !is_null($project->marketcapUsd)) {
+        $aggregate += floatval($project->marketcapUsd);
     };
 
     return $aggregate;
@@ -126,8 +125,8 @@ function balanceStr($project) {
 
 function marketCapStr($project) {
 
-    if (!is_null($project->latestCoinmarketcapData)) {
-        return "$". number_format( floatval($project->latestCoinmarketcapData->marketCapUsd), 0);
+    if (!is_null($project->marketcapUsd)) {
+        return "$". number_format( floatval($project->marketcapUsd), 0);
     }
     else
     {
