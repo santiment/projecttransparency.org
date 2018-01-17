@@ -59,10 +59,10 @@
           default = true;
           root = "${rootFolder}/public";
 
-          extraConfig = ''
-            auth_basic "Access restricted";
-            auth_basic_user_file ${rootFolder}/.htpasswd;
-          '';
+          #extraConfig = ''
+          #  auth_basic "Access restricted";
+          #  auth_basic_user_file ${rootFolder}/.htpasswd;
+          #'';
 
   	locations."~ ^.+\.php(/|$)".extraConfig = ''
 	  fastcgi_pass php_projtrans_fcgi;

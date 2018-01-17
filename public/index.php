@@ -20,7 +20,7 @@ $sanbaseClient = new EUAutomation\GraphQL\Client($sanbaseGraphQlUrl);
 
 $query = <<<'QUERY'
 {
-    allProjects(onlyProjectTransparency:true) {
+    allProjectsProjectTransparency {
         name,
         ticker,
         logoUrl,
@@ -44,7 +44,7 @@ $headers = [
 try {
     $resp = $sanbaseClient->response($query, null, $headers);
 
-    $projectsData = $resp->allProjects;
+    $projectsData = $resp->allProjectsProjectTransparency;
     // var_dump($resp);
     // var_dump($projectsData);
 } catch (Exception $e) {
