@@ -17,6 +17,10 @@ erl_crash.dump
 /app/node_modules/
 /app/.next
 
+/node_modules/
+/vendor/
+/.vagrant/
+
 # Generated on crash by NPM
 npm-debug.log
 
