@@ -1,5 +1,9 @@
 <?php
 
+/* Bypass old .php file until database is set-up */
+echo "Hello php world. This is a placeholder until we connect projecttransparency.org to the sanbase api";
+return 0;
+
 try {
     require __DIR__ . '/../vendor/autoload.php';
 
@@ -19,7 +23,7 @@ $username = getenv("DB_USER");
 $password = getenv("DB_PASSWORD");
 
 // error_log("Connecting:".$servername.$database.$username.$password);
-    
+
 
 // Create connection
 $conn_string = "host=".$servername." dbname=". $database ." user=".$username." password=".$password;
