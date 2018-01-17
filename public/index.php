@@ -45,8 +45,6 @@ try {
     $resp = $sanbaseClient->response($query, null, $headers);
 
     $projectsData = $resp->allProjectsProjectTransparency;
-    // var_dump($resp);
-    // var_dump($projectsData);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e, "\n";
 }
