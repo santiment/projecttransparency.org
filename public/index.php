@@ -303,15 +303,12 @@ $projectView = join("\n",array_map( "displayProject", $projectsData));
             journey towards self governance in the tokenized economy. Taiyang Zhang CEO of pre-ICO project Dappbase, and GATCOIN’s Simon
             Cheong explained that their support for Project Transparency stemmed from their imminent funding goals and the investor
             interest for this voluntary disclosure: "transparency drives better, sustainable business. And that's what we want."</p>
-            <p><strong>About Santiment:</strong> Santiment is the world's first crypto-market big data network, combining market datafeeds, sentiment
-            analysis, blockchain analytics, and everything else crypto-traders need for this emerging market. Built by traders for traders,
-            the network gives participants an information edge over the competitors thanks to machine learning and the wisdom of the crowd.</p>
+            <p><strong>About Santiment:</strong> Santiment is a platform for accessing cryptocurrency data, sharing insights, and
+            learning about how crypto markets work. We welcome data scientists, crypto traders and investors, and anyone passionate
+            about promoting trust and transparency to create a better society for all people.</p>
             <br />
             <p><strong>Contact for Santiment.net</strong><br />
-               Dorjee Sun: <a href="mailto:dorjee.s@santiment.net">dorjee.s@santiment.net</a><br />
-               Contact: +61 416 292 245<br />
-               WhatsApp: +65 9777 0416<br />
-               Skype: dorjee.sun</p>
+               <a href="mailto:team@santiment.net">team@santiment.net</a></p>
         </div>
     </div>
 
