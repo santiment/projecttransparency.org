@@ -106,7 +106,7 @@ function balanceStr($project) {
         return "Verifying";
     }
 
-    $result = $result . "$" . number_format( $project->usdBalance, 0);
+    $result = "$" . number_format( $project->usdBalance, 0);
 
     //Write BTC balance (if any)
     if (!is_null($project->btcBalance) and $project->btcBalance > 0.049) {
